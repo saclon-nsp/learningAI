@@ -1,0 +1,55 @@
+<div class="home-container">
+  <nav class="navbar">
+    <div class="navbar-content">
+      <h2 class="navbar-logo">🚀 LearningAI</h2>
+      <div class="navbar-user">
+        <span class="user-info">
+          Welcome, <strong>{{ currentUser()?.fullName }}</strong>
+        </span>
+        <button (click)="logout()" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="welcome-card">
+      <h1>Welcome back! 👋</h1>
+      <p>You have successfully logged in to LearningAI</p>
+      
+      <div class="user-details">
+        <h3>Your Account Information:</h3>
+        <div class="info-box">
+          <p><strong>Name:</strong> {{ currentUser()?.fullName }}</p>
+          <p><strong>Email:</strong> {{ currentUser()?.email }}</p>
+          <p><strong>Login Time:</strong> {{ now | date:'medium' }}</p>
+        </div>
+      </div>
+
+      <div class="features">
+        <h3>Available Features:</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <span class="feature-icon">📚</span>
+            <h4>Learning Modules</h4>
+            <p>Access comprehensive learning materials</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🎯</span>
+            <h4>Practice Tests</h4>
+            <p>Test your knowledge with quizzes</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">📊</span>
+            <h4>Progress Tracking</h4>
+            <p>Monitor your learning progress</p>
+          </div>
+          <div class="feature-card">
+            <span class="feature-icon">🏆</span>
+            <h4>Certificates</h4>
+            <p>Earn certificates upon completion</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

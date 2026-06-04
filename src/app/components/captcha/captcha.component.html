@@ -1,0 +1,29 @@
+<div class="captcha-container">
+  <div class="captcha-header">
+    <h3>Security Verification</h3>
+  </div>
+
+  <div class="captcha-image-wrapper">
+    <img [src]="getCaptchaImageUrl()" alt="Captcha image" class="captcha-image" />
+    <button
+      type="button"
+      (click)="refreshCaptcha()"
+      class="refresh-btn"
+      title="Refresh captcha"
+    >
+      🔄
+    </button>
+  </div>
+
+  <div class="captcha-input-group">
+    <input
+      type="text"
+      [(ngModel)]="captchaAnswer"
+      (input)="onAnswerChange()"
+      placeholder="Enter the characters shown above"
+      class="captcha-input"
+      autocomplete="off"
+      required
+    />
+  </div>
+</div>

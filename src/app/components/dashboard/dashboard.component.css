@@ -1,0 +1,74 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.dashboard-nav .logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.dashboard-nav .actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.logout {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dashboard-main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 6px 0;
+  color: #333;
+}
+
+.dashboard-header p {
+  margin: 0 0 20px 0;
+  color: #666;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.card p {
+  margin: 0;
+  color: #555;
+}

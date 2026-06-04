@@ -1,0 +1,176 @@
+<div class="login-container">
+  <div class="login-card">
+
+    <!-- Header -->
+    <div class="login-header">
+      <div class="login-brand">
+        <div class="login-brand-logo">SL</div>
+
+        <div class="login-brand-copy">
+          <h1>SacLon</h1>
+          <p>Sign in to access your dashboard</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reactive Form -->
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+      class="login-form"
+      novalidate
+    >
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          class="form-input"
+          [disabled]="isLoading"
+        />
+
+        <div
+          class="validation-error"
+          *ngIf="email?.invalid && email?.touched"
+        >
+          <small *ngIf="email?.errors?.['required']">
+            Email is required
+          </small>
+
+          <small *ngIf="email?.errors?.['email']">
+            Please enter a valid email address
+          </small>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          class="form-input"
+          [disabled]="isLoading"
+        />
+
+        <div
+          class="validation-error"
+          *ngIf="password?.invalid && password?.touched"
+        >
+          <small>Password is required</small>
+        </div>
+      </div>
+
+      <!-- Captcha -->
+      <app-captcha
+        (captchaValid)="onCaptchaValidation($event)"
+      ></app-captcha>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message">
+        <span>⚠️</span>
+
+        <div>
+          <strong>Login Failed</strong>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <div *ngIf="successMessage" class="success-message">
+        <span>✓</span>
+
+        <div>
+          <strong>Success</strong>
+          <p>{{ successMessage }}</p>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-btn"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="isLoading" class="loader"></span>
+
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+
+    </form>
+
+    <!-- Signup -->
+    <div class="signup-link">
+      <p>
+        Don't have an account?
+        <a
+          (click)="goToSignup()"
+          class="link"
+        >
+          Sign up
+        </a>
+      </p>
+    </div>
+
+    <!-- Footer Links -->
+    <div class="brand-footer">
+
+      <!-- LinkedIn -->
+      <a
+        href="https://www.linkedin.com/in/sachin-londhe-88a62316b"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="brand-link"
+        aria-label="LinkedIn"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="brand-icon-svg linkedin"
+          aria-hidden="true"
+        >
+          <path
+            d="M4.98 3.5C4.98 4.6 4.1 5.5 3 5.5 1.9 5.5 1 4.6 1 3.5 1 2.4 1.9 1.5 3 1.5 4.1 1.5 4.98 2.4 4.98 3.5zM1 24H5V7H1v17zM8.5 7H13v2.2h.05c.55-1 1.9-2 3.9-2 4.15 0 4.9 2.7 4.9 6.2V24h-4.1v-7.6c0-1.8-.05-4.1-2.5-4.1-2.5 0-2.9 2-2.9 4v7.7H8.5V7z"
+          />
+        </svg>
+      </a>
+
+      <!-- Portfolio -->
+      <a
+        href="https://saclon-nsp.github.io/sachin-portfolio/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="brand-link"
+        aria-label="Portfolio"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="brand-icon-svg portfolio"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zm0-2a3 3 0 0 0-3 3v11a3 3 0 0 0 3 3h16a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H4zm8 1.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm-2.5 8.5h5v1.5h-5V15z"
+          />
+        </svg>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- Illustration -->
+  <div class="login-illustration">
+    <div class="illustration-content">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+</div>
