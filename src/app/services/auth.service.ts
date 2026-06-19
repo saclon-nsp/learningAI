@@ -16,8 +16,8 @@ export class AuthService {
   private users: User[] = [];
 
   constructor() {
-    // Load users from localStorage
-    const stored = localStorage.getItem('users');
+    // Load users from Session Storage
+    const stored = sessionStorage.getItem('users');
     if (stored) {
       this.users = JSON.parse(stored);
     }
@@ -30,8 +30,11 @@ export class AuthService {
 
     if (!this.users.find(u => u.email === demoUser.email)) {
       this.users.push(demoUser);
-      localStorage.setItem('users', JSON.stringify(this.users));
+      sessionStorage.setItem('users', JSON.stringify(this.users));
     }
+
+    this.checkLoggedIn();
+
   }
 
   signup(user: User): { success: boolean; message: string } {
@@ -41,7 +44,7 @@ export class AuthService {
     }
 
     this.users.push(user);
-    localStorage.setItem('users', JSON.stringify(this.users));
+    sessionStorage.setItem('users', JSON.stringify(this.users));
     return { success: true, message: 'Signup successful! Please login.' };
   }
 
@@ -50,7 +53,7 @@ export class AuthService {
     if (user) {
       this.isLoggedIn.set(true);
       this.currentUser.set(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
       return { success: true, message: 'Login successful!' };
     }
     return { success: false, message: 'Invalid credentials' };
@@ -59,11 +62,11 @@ export class AuthService {
   logout(): void {
     this.isLoggedIn.set(false);
     this.currentUser.set(null);
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
   }
 
   checkLoggedIn(): void {
-    const stored = localStorage.getItem('currentUser');
+    const stored = sessionStorage.getItem('currentUser');
     if (stored) {
       this.currentUser.set(JSON.parse(stored));
       this.isLoggedIn.set(true);
