@@ -77,23 +77,29 @@ export class SignupComponent implements OnInit {
 
     this.isLoading = true;
 
-    const result = this.authService.signup({
-      fullName: this.fullName,
-      email: this.email,
+    const payload = {
+      username: this.email,     // IMPORTANT mapping
       password: this.password
+    };
+
+    this.authService.signup(payload).subscribe({
+      next: (res) => {
+        console.log('Signup success:', res);
+
+        this.successMessage = 'Account created successfully!';
+        this.isLoading = false;
+
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1000);
+      },
+      error: (err) => {
+        console.error('Signup error:', err);
+
+        this.errorMessage = 'Signup failed. Try again.';
+        this.isLoading = false;
+      }
     });
-
-    if (!result.success) {
-      this.errorMessage = result.message;
-      this.isLoading = false;
-      return;
-    }
-
-    this.successMessage = result.message;
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-      this.isLoading = false;
-    }, 1000);
   }
 
   goToLogin(): void {

@@ -20,7 +20,7 @@
         <h3>Your Account Information:</h3>
         <div class="info-box">
           <p><strong>Name:</strong> {{ currentUser()?.fullName }}</p>
-          <p><strong>Email:</strong> {{ currentUser()?.email }}</p>
+          <p><strong>Email:</strong> {{ currentUser()?.username }}</p>
           <p><strong>Login Time:</strong> {{ now | date:'medium' }}</p>
         </div>
       </div>

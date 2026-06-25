@@ -1,7 +1,10 @@
 import { Injectable, signal } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
 
 export interface User {
-  email: string;
+  username: string;
   password: string;
   fullName?: string;
 }
@@ -10,66 +13,63 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
+
   isLoggedIn = signal(false);
   currentUser = signal<User | null>(null);
 
-  private users: User[] = [];
+  private apiUrl = environment.apiUrl;
 
-  constructor() {
-    // Load users from Session Storage
-    const stored = sessionStorage.getItem('users');
-    if (stored) {
-      this.users = JSON.parse(stored);
-    }
-
-    const demoUser: User = {
-      email: 'test@example.com',
-      password: 'test123',
-      fullName: 'Demo User'
-    };
-
-    if (!this.users.find(u => u.email === demoUser.email)) {
-      this.users.push(demoUser);
-      sessionStorage.setItem('users', JSON.stringify(this.users));
-    }
-
+  constructor(private http: HttpClient) {
     this.checkLoggedIn();
-
   }
 
-  signup(user: User): { success: boolean; message: string } {
-    // Check if user already exists
-    if (this.users.find(u => u.email === user.email)) {
-      return { success: false, message: 'Email already registered' };
-    }
-
-    this.users.push(user);
-    sessionStorage.setItem('users', JSON.stringify(this.users));
-    return { success: true, message: 'Signup successful! Please login.' };
+  // ---------------- SIGNUP ----------------
+  signup(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/auth/signup`, user);
   }
 
-  login(email: string, password: string): { success: boolean; message: string } {
-    const user = this.users.find(u => u.email === email && u.password === password);
-    if (user) {
+  // ---------------- LOGIN (FIXED) ----------------
+  login(username: string, password: string) {
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, {
+      username,
+      password
+    }).pipe(
+      tap((res: any) => {
+
+        // store token in SESSION storage
+        sessionStorage.setItem('token', res.token);
+
+        // optional user state (for UI)
+        const user: User = {
+          username: username,
+          password: password
+        };
+
+        this.currentUser.set(user);
+        this.isLoggedIn.set(true);
+
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+      })
+    );
+  }
+
+  // ---------------- SESSION RESTORE ----------------
+  checkLoggedIn(): void {
+    const storedUser = sessionStorage.getItem('currentUser');
+    const token = sessionStorage.getItem('token');
+
+    if (storedUser && token) {
+      this.currentUser.set(JSON.parse(storedUser));
       this.isLoggedIn.set(true);
-      this.currentUser.set(user);
-      sessionStorage.setItem('currentUser', JSON.stringify(user));
-      return { success: true, message: 'Login successful!' };
     }
-    return { success: false, message: 'Invalid credentials' };
   }
 
+  // ---------------- LOGOUT ----------------
   logout(): void {
     this.isLoggedIn.set(false);
     this.currentUser.set(null);
-    sessionStorage.removeItem('currentUser');
-  }
 
-  checkLoggedIn(): void {
-    const stored = sessionStorage.getItem('currentUser');
-    if (stored) {
-      this.currentUser.set(JSON.parse(stored));
-      this.isLoggedIn.set(true);
-    }
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('token');
   }
 }

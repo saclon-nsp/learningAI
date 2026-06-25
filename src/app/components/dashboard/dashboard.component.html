@@ -2,7 +2,7 @@
   <nav class="dashboard-nav">
     <div class="logo">🚀 LearningAI</div>
     <div class="actions">
-      <span class="user">Hello, {{ currentUser()?.fullName || currentUser()?.email }}</span>
+      <span class="user">Hello, {{ currentUser()?.fullName || currentUser()?.username }}</span>
       <button (click)="logout()" class="logout">Logout</button>
     </div>
   </nav>

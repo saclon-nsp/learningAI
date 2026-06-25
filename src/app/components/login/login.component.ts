@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -9,6 +9,8 @@ import {
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CaptchaComponent } from '../captcha/captcha.component';
+import { finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-login',
@@ -23,11 +25,13 @@ import { CaptchaComponent } from '../captcha/captcha.component';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+
   loginForm!: FormGroup;
+
   captchaValid = false;
   errorMessage = '';
   successMessage = '';
-  isLoading = false;
+  isLoading = signal(false);
 
   constructor(
     private fb: FormBuilder,
@@ -38,9 +42,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required]]
     });
 
+    // auto redirect if already logged in
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
@@ -51,38 +56,61 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+
     this.errorMessage = '';
     this.successMessage = '';
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      this.errorMessage = 'Please enter valid email and password';
+      this.errorMessage = 'Enter valid email and password';
       return;
     }
 
     if (!this.captchaValid) {
-      this.errorMessage = 'Please solve the captcha correctly';
+      this.errorMessage = 'Captcha validation failed';
       return;
     }
-
-    this.isLoading = true;
 
     const { email, password } = this.loginForm.value;
 
-    const result = this.authService.login(email, password);
+    // 🔥 SET LOADER FIRST (outside observable)
+    this.isLoading.set(true);
 
-    if (!result.success) {
-      this.errorMessage = result.message;
-      this.isLoading = false;
-      return;
-    }
+    this.authService.login(email, password).subscribe({
 
-    this.successMessage = result.message;
+      next: (res: any) => {
+        debugger;
 
-    setTimeout(() => {
-      this.router.navigate(['/dashboard']);
-      this.isLoading = false;
-    }, 1000);
+        this.isLoading.set(false); // 🔥 stop immediately
+
+        if (!res?.success) {
+          this.errorMessage = res?.message || 'Invalid credentials';
+          return;
+        }
+
+        this.successMessage = 'Login successful';
+
+        if (res.token) {
+          sessionStorage.setItem('token', res.token);
+        }
+
+        this.router.navigate(['/dashboard']);
+      },
+
+      error: (err) => {
+        debugger;
+
+        this.isLoading.set(false); // 🔥 MUST be first line
+
+        if (err?.status === 401) {
+          this.errorMessage = err?.error?.message || 'Invalid credentials';
+        } else if (err?.status === 0) {
+          this.errorMessage = 'Backend not reachable';
+        } else {
+          this.errorMessage = 'Server error';
+        }
+      }
+    });
   }
 
   goToSignup(): void {
