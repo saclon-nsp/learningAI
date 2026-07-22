@@ -4,9 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 export interface User {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string; 
+  email?: string; 
   fullName?: string;
+  phone_number?: string;
+  otp?: string;
 }
 
 @Injectable({
@@ -24,8 +29,20 @@ export class AuthService {
   }
 
   // ---------------- SIGNUP ----------------
-  signup(user: User) {
-    return this.http.post<any>(`${this.apiUrl}/auth/signup`, user);
+  userSignup(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/signup/username`, user);
+  }
+
+  emailSignup(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/signup/email`, user);
+  }
+
+  sendOtp(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/signup/sendOtp`, user);
+  }
+
+  verifyOtp(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/signup/otp`, user);
   }
 
   // ---------------- LOGIN (FIXED) ----------------

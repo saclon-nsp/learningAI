@@ -1,0 +1,235 @@
+<div class="signup-form">
+
+  <!-- First Name -->
+  <div class="form-group">
+
+    <label>First Name</label>
+
+    <input
+      type="text"
+      [(ngModel)]="firstName"
+      name="firstName"
+      placeholder="Enter your first name"
+      class="form-input"
+      [disabled]="isLoading()"
+    />
+
+  </div>
+
+
+
+  <!-- Last Name -->
+  <div class="form-group">
+
+    <label>Last Name</label>
+
+    <input
+      type="text"
+      [(ngModel)]="lastName"
+      name="lastName"
+      placeholder="Enter your last name"
+      class="form-input"
+      [disabled]="isLoading()"
+    />
+
+  </div>
+
+
+
+
+  <!-- Username -->
+  <div class="form-group">
+
+    <label>Email</label>
+
+    <input
+      type="email"
+      [(ngModel)]="email_Id"
+      name="email"
+      placeholder="Enter your email"
+      class="form-input"
+      [disabled]="isLoading()"
+    />
+
+    <small>
+      Example: saclon123
+    </small>
+
+  </div>
+
+
+
+
+  <!-- Password -->
+  <div class="form-group">
+
+    <label>Password</label>
+
+    <div class="password-wrapper">
+
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        (input)="onPasswordChange()"
+        placeholder="Create password"
+        class="form-input"
+        [disabled]="isLoading()"
+      />
+
+      <button
+        type="button"
+        class="eye-btn"
+        (click)="togglePassword()">
+
+        {{ showPassword ? '🙈' : '👁️' }}
+
+      </button>
+
+    </div>
+
+    <div class="password-strength">
+
+      <div class="strength-bar">
+
+        <div
+          class="strength-fill"
+          [style.width.%]="(passwordStrength / 4) * 100"
+          [style.backgroundColor]="getPasswordStrengthColor()">
+
+        </div>
+
+      </div>
+
+      <span
+        class="strength-text"
+        [style.color]="getPasswordStrengthColor()">
+
+        {{ getPasswordStrengthLabel() }}
+
+      </span>
+
+    </div>
+
+    <small>
+      Password must be at least 6 characters
+    </small>
+
+  </div>
+
+
+
+  <!-- Confirm Password -->
+  <div class="form-group">
+
+    <label>Confirm Password</label>
+
+    <div class="password-wrapper">
+
+      <input
+        [type]="showConfirmPassword ? 'text' : 'password'"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm password"
+        class="form-input"
+        [disabled]="isLoading()"
+      />
+
+      <button
+        type="button"
+        class="eye-btn"
+        (click)="toggleConfirmPassword()">
+
+        {{ showConfirmPassword ? '🙈' : '👁️' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Terms -->
+
+  <div class="checkbox-group">
+
+
+    <label class="checkbox-label">
+
+
+      <input
+        type="checkbox"
+        [(ngModel)]="agreeToTerms"
+        name="agreeToTerms"
+        [disabled]="isLoading()"
+      />
+
+
+      <span>
+        I agree to the
+        <a href="#" class="link">
+          Terms and Conditions
+        </a>
+      </span>
+
+
+    </label>
+
+
+  </div>
+
+
+
+
+
+  <!-- Error -->
+
+  <div
+    *ngIf="errorMessage"
+    class="error-message">
+
+    ⚠️ {{errorMessage}}
+
+  </div>
+
+
+
+
+
+  <!-- Success -->
+
+  <div
+    *ngIf="successMessage"
+    class="success-message">
+
+    ✓ {{successMessage}}
+
+  </div>
+
+
+  <!-- Button -->
+
+
+  <button
+    class="signup-btn"
+    type="button"
+    (click)="signup()"
+    [disabled]="isLoading()">
+
+
+    <span *ngIf="isLoading()" class="loader"></span>
+
+
+    {{isLoading() ? 'Creating Account...' : 'Sign Up'}}
+
+
+  </button>
+
+  <app-success-popup
+      [isVisible]="popupService.isVisible()"
+      [title]="popupService.title()"
+      [message]="popupService.message()"
+      [type]="popupService.type()"
+      (close)="closePopup()">
+  </app-success-popup>
+
+</div>

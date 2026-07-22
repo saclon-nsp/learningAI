@@ -1,0 +1,51 @@
+<div
+  class="popup-overlay"
+  *ngIf="isVisible">
+
+  <div class="popup-card">
+
+    <!-- Success Icon -->
+
+    <div
+    class="popup-icon"
+    [ngClass]="type">
+
+    <span *ngIf="type=='success'">✓</span>
+
+    <span *ngIf="type=='error'">✕</span>
+
+    <span *ngIf="type=='warning'">!</span>
+
+    <span *ngIf="type=='info'">i</span>
+
+    </div>
+
+    <!-- Title -->
+
+    <h2>
+
+      {{ title }}
+
+    </h2>
+
+    <!-- Message -->
+
+    <p>
+
+      {{ message }}
+
+    </p>
+
+    <!-- Button -->
+
+    <button
+      class="popup-btn"
+      (click)="closePopup()">
+
+      OK
+
+    </button>
+
+  </div>
+
+</div>

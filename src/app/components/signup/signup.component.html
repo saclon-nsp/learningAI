@@ -17,15 +17,30 @@
     </div>
 
     <form (ngSubmit)="signup()" class="signup-form" novalidate>
-      <!-- Full Name Input -->
+      <!-- First Name Input -->
       <div class="form-group">
-        <label for="fullName">Full Name</label>
+        <label for="firstName">First Name</label>
         <input
           type="text"
-          id="fullName"
-          [(ngModel)]="fullName"
-          name="fullName"
-          placeholder="Enter your full name"
+          id="firstName"
+          [(ngModel)]="firstName"
+          name="firstName"
+          placeholder="Enter your first name"
+          class="form-input"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <!-- Last Name Input -->
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="lastName"
+          name="lastName"
+          placeholder="Enter your last name"
           class="form-input"
           required
           [disabled]="isLoading"

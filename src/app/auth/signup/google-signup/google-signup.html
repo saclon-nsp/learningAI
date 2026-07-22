@@ -1,0 +1,87 @@
+<div class="signup-form">
+
+  <!-- Welcome -->
+
+  <div class="google-header">
+
+    <h3>Sign up with Google</h3>
+
+    <p>
+      Continue securely using your Google account.
+    </p>
+
+  </div>
+
+
+
+  <!-- Google Sign In Button -->
+
+  <button
+    class="google-btn"
+    type="button"
+    (click)="signInWithGoogle()"
+    [disabled]="isLoading()">
+
+    <span
+      *ngIf="isLoading()"
+      class="loader">
+    </span>
+
+    <ng-container *ngIf="!isLoading()">
+
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 48 48">
+
+        <path
+          fill="#EA4335"
+          d="M24 9.5c3.54 0 6.72 1.22 9.22 3.61l6.89-6.89C35.89 2.4 30.36 0 24 0 14.62 0 6.51 5.38 2.56 13.22l8.03 6.23C12.47 13.31 17.76 9.5 24 9.5z"/>
+
+        <path
+          fill="#4285F4"
+          d="M46.98 24.55c0-1.57-.14-3.09-.39-4.55H24v9.09h12.94c-.56 2.98-2.25 5.5-4.79 7.18l7.74 6.01C44.41 38.09 46.98 31.87 46.98 24.55z"/>
+
+        <path
+          fill="#FBBC05"
+          d="M10.59 28.55A14.5 14.5 0 0 1 9.5 24c0-1.58.38-3.08 1.09-4.55l-8.03-6.23A23.9 23.9 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l8.03-6.23z"/>
+
+        <path
+          fill="#34A853"
+          d="M24 48c6.36 0 11.7-2.1 15.6-5.72l-7.74-6.01c-2.15 1.45-4.89 2.32-7.86 2.32-6.24 0-11.53-3.81-13.41-9.18l-8.03 6.23C6.51 42.62 14.62 48 24 48z"/>
+
+      </svg>
+
+    </ng-container>
+
+    {{ isLoading()
+        ? 'Signing in...'
+        : 'Continue with Google'
+    }}
+
+  </button>
+
+
+  <!-- Error -->
+
+  <div
+    *ngIf="errorMessage"
+    class="error-message">
+
+    ⚠️ {{ errorMessage }}
+
+  </div>
+
+
+
+  <!-- Success -->
+
+  <div
+    *ngIf="successMessage"
+    class="success-message">
+
+    ✓ {{ successMessage }}
+
+  </div>
+
+</div>

@@ -1,0 +1,107 @@
+<div class="signup-container">
+
+  <div class="signup-card">
+
+    <!-- Header -->
+
+    <div class="signup-header">
+
+      <div class="logo-circle">
+        SMS
+      </div>
+
+      <h1>Create Account</h1>
+
+      <p>
+        Join SMS and unlock a smarter digital experience.
+      </p>
+
+    </div>
+
+    <!-- Signup Tabs -->
+
+    <div class="signup-tabs">
+
+      <button
+        [class.active]="selectedSignup=='username'"
+        (click)="changeSignup('username')">
+
+        Username
+
+      </button>
+
+      <button
+        [class.active]="selectedSignup=='email'"
+        (click)="changeSignup('email')">
+
+        Email
+
+      </button>
+
+      <button
+        [class.active]="selectedSignup=='otp'"
+        (click)="changeSignup('otp')">
+
+        Mobile OTP
+
+      </button>
+
+      <button
+        [class.active]="selectedSignup=='google'"
+        (click)="changeSignup('google')">
+
+        Google
+
+      </button>
+
+    </div>
+
+    <!-- Form -->
+
+    <div class="signup-body">
+
+      <app-username-signup
+        *ngIf="selectedSignup=='username'">
+      </app-username-signup>
+
+      <app-email-signup
+        *ngIf="selectedSignup=='email'">
+      </app-email-signup>
+
+      <app-otp-signup
+        *ngIf="selectedSignup=='otp'">
+      </app-otp-signup>
+
+      <app-google-signup
+        *ngIf="selectedSignup=='google'">
+      </app-google-signup>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="footer-divider">
+
+      <span>OR</span>
+
+    </div>
+
+    <div class="signup-footer">
+
+      <span>
+
+        Already have an account?
+
+      </span>
+
+      <a routerLink="/login">
+
+        Login
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

@@ -12,7 +12,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
-  fullName = '';
+  firstName = '';
+  lastName='';
   email = '';
   password = '';
   confirmPassword = '';
@@ -55,7 +56,7 @@ export class SignupComponent implements OnInit {
     this.successMessage = '';
 
     // Validation
-    if (!this.fullName || !this.email || !this.password || !this.confirmPassword) {
+    if (!this.firstName || !this.lastName || !this.email || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Please fill in all fields';
       return;
     }
@@ -78,11 +79,13 @@ export class SignupComponent implements OnInit {
     this.isLoading = true;
 
     const payload = {
+      first_name: this.firstName,
+      last_name: this.lastName,
       username: this.email,     // IMPORTANT mapping
       password: this.password
     };
 
-    this.authService.signup(payload).subscribe({
+    this.authService.userSignup(payload).subscribe({
       next: (res) => {
         console.log('Signup success:', res);
 

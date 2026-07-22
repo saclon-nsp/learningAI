@@ -1,0 +1,345 @@
+/* ===============================
+   Page
+================================ */
+
+.signup-container {
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(circle,
+            #dbeafe 0%,
+            #bfdbfe 20%,
+            #64748b 55%,
+            #1e293b 100%);
+
+}
+
+/* ===============================
+   Card
+================================ */
+
+.signup-card{
+
+    width:100%;
+
+    max-width:900px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:45px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.08);
+
+}
+
+
+/* ===============================
+   Header
+================================ */
+
+.signup-header{
+
+    text-align:center;
+
+    margin-bottom:35px;
+
+}
+
+.logo-circle{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    box-shadow:
+        0 10px 25px rgba(20,184,166,.3);
+
+}
+
+.signup-header h1{
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    color:#1f2937;
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.signup-header p{
+
+    color:#6b7280;
+
+    font-size:15px;
+
+}
+
+
+/* ===============================
+   Tabs
+================================ */
+
+.signup-tabs{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-bottom:35px;
+
+}
+
+.signup-tabs button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#f1f5f9;
+
+    color:#475569;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.signup-tabs button:hover{
+
+    background:#d1fae5;
+
+}
+
+.signup-tabs button.active{
+
+    background:linear-gradient(
+        135deg,
+        #14b8a6,
+        #0f766e
+    );
+
+    color:white;
+
+    box-shadow:
+        0 8px 20px rgba(20,184,166,.25);
+
+}
+
+
+/* ===============================
+   Form Area
+================================ */
+
+.signup-body{
+
+    min-height:350px;
+
+}
+
+
+/* ===============================
+   Divider
+================================ */
+
+.footer-divider{
+
+    display:flex;
+
+    align-items:center;
+
+    margin-top:35px;
+
+    margin-bottom:22px;
+
+}
+
+.footer-divider::before,
+.footer-divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#d1d5db;
+
+}
+
+.footer-divider span{
+
+    margin:0 14px;
+
+    color:#6b7280;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+}
+
+
+/* ===============================
+   Footer
+================================ */
+
+.signup-footer{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:6px;
+
+    color:#6b7280;
+
+    font-size:15px;
+
+}
+
+.signup-footer a{
+
+    color:#14b8a6;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+}
+
+.signup-footer a:hover{
+
+    color:#0f766e;
+
+    text-decoration:underline;
+
+}
+
+
+/* ===============================
+   Responsive
+================================ */
+
+@media(max-width:768px){
+
+    .signup-card{
+
+        padding:28px;
+
+    }
+
+    .signup-header h1{
+
+        font-size:28px;
+
+    }
+
+    .signup-tabs{
+
+        flex-wrap:wrap;
+
+    }
+
+    .signup-tabs button{
+
+        min-width:140px;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .signup-card{
+
+        padding:20px;
+
+    }
+
+    .logo-circle{
+
+        width:65px;
+
+        height:65px;
+
+        font-size:24px;
+
+    }
+
+    .signup-header h1{
+
+        font-size:24px;
+
+    }
+
+    .signup-header p{
+
+        font-size:14px;
+
+    }
+
+    .signup-tabs{
+
+        flex-direction:column;
+
+    }
+
+    .signup-tabs button{
+
+        width:100%;
+
+    }
+
+}
