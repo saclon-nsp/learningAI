@@ -1,11 +1,18 @@
 <div class="home-container">
   <nav class="navbar">
     <div class="navbar-content">
-      <h2 class="navbar-logo">🚀 LearningAI</h2>
+      <div class="navbar-brand">
+        <img
+          src="assets/images/sms-logo.png"
+          alt="SMS Logo"
+          class="navbar-logo-img">
+      </div>
       <div class="navbar-user">
-        <span class="user-info">
-          Welcome, <strong>{{ currentUser()?.fullName }}</strong>
-        </span>
+        <div class="profile-section">
+          <div class="profile-avatar">
+            {{ currentUser()?.firstName?.charAt(0) }}{{ currentUser()?.lastName?.charAt(0) }}
+          </div>
+        </div>
         <button (click)="logout()" class="logout-btn">Logout</button>
       </div>
     </div>
@@ -13,43 +20,74 @@
 
   <div class="main-content">
     <div class="welcome-card">
-      <h1>Welcome back! 👋</h1>
-      <p>You have successfully logged in to LearningAI</p>
+      <h1>Welcome to Society Management System! 👋</h1>
+      <p>You have successfully logged in to SMS</p>
       
       <div class="user-details">
         <h3>Your Account Information:</h3>
         <div class="info-box">
-          <p><strong>Name:</strong> {{ currentUser()?.fullName }}</p>
-          <p><strong>Email:</strong> {{ currentUser()?.username }}</p>
+          <p><strong>User Name:</strong> {{ currentUser()?.firstName }} {{ currentUser()?.lastName }}</p>
+          <p><strong>Society:</strong> {{ currentUser()?.society_name }}</p>
           <p><strong>Login Time:</strong> {{ now | date:'medium' }}</p>
         </div>
       </div>
 
       <div class="features">
         <h3>Available Features:</h3>
+
         <div class="feature-grid">
+
           <div class="feature-card">
-            <span class="feature-icon">📚</span>
-            <h4>Learning Modules</h4>
-            <p>Access comprehensive learning materials</p>
+            <span class="feature-icon">🏠</span>
+            <h4>Society Details</h4>
+            <p>View and manage society information.</p>
           </div>
+
           <div class="feature-card">
-            <span class="feature-icon">🎯</span>
-            <h4>Practice Tests</h4>
-            <p>Test your knowledge with quizzes</p>
+            <span class="feature-icon">🛠️</span>
+            <h4>Complaints</h4>
+            <p>Raise and track society complaints.</p>
           </div>
+
           <div class="feature-card">
-            <span class="feature-icon">📊</span>
-            <h4>Progress Tracking</h4>
-            <p>Monitor your learning progress</p>
+            <span class="feature-icon">💰</span>
+            <h4>Maintenance</h4>
+            <p>Pay and monitor maintenance charges.</p>
           </div>
+
           <div class="feature-card">
-            <span class="feature-icon">🏆</span>
-            <h4>Certificates</h4>
-            <p>Earn certificates upon completion</p>
+            <span class="feature-icon">📢</span>
+            <h4>Notices</h4>
+            <p>View society announcements and updates.</p>
           </div>
+
+          <div class="feature-card">
+            <span class="feature-icon">👥</span>
+            <h4>Members</h4>
+            <p>Manage resident and family information.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-icon">💬</span>
+            <h4>Community Chat</h4>
+            <p>Communicate with residents instantly.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-icon">📄</span>
+            <h4>Documents</h4>
+            <p>Access society documents and certificates.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-icon">📈</span>
+            <h4>Expense Reports</h4>
+            <p>Track society expenses and financial reports.</p>
+          </div>
+
         </div>
       </div>
+
     </div>
   </div>
 </div>

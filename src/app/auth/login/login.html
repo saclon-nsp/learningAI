@@ -1,0 +1,85 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <!-- Header -->
+
+    <div class="login-header">
+
+      <div class="logo-circle">
+        SMS
+      </div>
+
+      <h1>Welcome Back</h1>
+
+      <p>
+        Sign in to continue to your Society Management System.
+      </p>
+
+    </div>
+
+    <!-- Login Tabs -->
+
+    <div class="login-tabs">
+
+      <button
+        [class.active]="selectedLogin=='username'"
+        (click)="changeLogin('username')">
+
+        Username
+
+      </button>
+
+      <button
+        [class.active]="selectedLogin=='email'"
+        (click)="changeLogin('email')">
+
+        Email
+
+      </button>
+
+      <button
+        [class.active]="selectedLogin=='otp'"
+        (click)="changeLogin('otp')">
+
+        Mobile OTP
+
+      </button>
+
+    </div>
+
+    <!-- Login Forms -->
+
+    <div class="login-body">
+
+      <app-username-login
+        *ngIf="selectedLogin=='username'">
+      </app-username-login>
+
+      <app-email-login
+        *ngIf="selectedLogin=='email'">
+      </app-email-login>
+
+      <app-otp-login
+        *ngIf="selectedLogin=='otp'">
+      </app-otp-login>
+
+    </div>
+
+    <div class="footer-divider">
+      <span>OR</span>
+    </div>
+
+    <div class="login-footer">
+
+      <span>Don't have an account?</span>
+
+      <a routerLink="/signup">
+        Create Account
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,128 @@
+<div class="login-form">
+
+  <!-- Username -->
+
+  <div class="form-group">
+
+    <label>Username</label>
+
+    <input
+      type="text"
+      [(ngModel)]="username"
+      name="username"
+      placeholder="Enter your username"
+      class="form-input"
+      [disabled]="isLoading()"
+    />
+
+    <small>
+      Example: saclon123
+    </small>
+
+  </div>
+
+  <!-- Password -->
+
+  <div class="form-group">
+
+    <label>Password</label>
+
+    <div class="password-wrapper">
+
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="Enter your password"
+        class="form-input"
+        [disabled]="isLoading()"
+      />
+
+      <button
+        type="button"
+        class="eye-btn"
+        (click)="togglePassword()">
+
+        {{ showPassword ? '🙈' : '👁️' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Remember Me & Forgot Password -->
+
+  <div class="login-options">
+
+    <label class="checkbox-label">
+
+      <input
+        type="checkbox"
+        [(ngModel)]="rememberMe"
+        name="rememberMe"
+        [disabled]="isLoading()"
+      />
+
+      <span>Remember Me</span>
+
+    </label>
+
+    <a
+      routerLink="/forgot-password"
+      class="forgot-link">
+
+      Forgot Password?
+
+    </a>
+
+  </div>
+
+  <!-- Error Message -->
+
+  <div
+    *ngIf="errorMessage"
+    class="error-message">
+
+    ⚠️ {{ errorMessage }}
+
+  </div>
+
+  <!-- Success Message -->
+
+  <div
+    *ngIf="successMessage"
+    class="success-message">
+
+    ✓ {{ successMessage }}
+
+  </div>
+
+  <!-- Login Button -->
+
+  <button
+    class="login-btn"
+    type="button"
+    (click)="login()"
+    [disabled]="isLoading()">
+
+    <span
+      *ngIf="isLoading()"
+      class="loader">
+    </span>
+
+    {{ isLoading() ? 'Signing In...' : 'Login' }}
+
+  </button>
+
+  <!-- Popup -->
+
+  <app-success-popup
+      [isVisible]="popupService.isVisible()"
+      [title]="popupService.title()"
+      [message]="popupService.message()"
+      [type]="popupService.type()"
+      (close)="closePopup()">
+  </app-success-popup>
+
+</div>

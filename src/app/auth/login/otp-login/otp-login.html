@@ -1,0 +1,136 @@
+<div class="login-form">
+
+  <!-- Mobile Number -->
+
+  <div class="form-group">
+
+    <label>Mobile Number</label>
+
+    <input
+      type="text"
+      [(ngModel)]="mobile"
+      name="mobile"
+      placeholder="Enter your mobile number"
+      class="form-input"
+      maxlength="10"
+      [disabled]="isLoading()"
+    />
+
+    <small *ngIf="!otpSent">
+      Example: 9876543210
+    </small>
+
+  </div>
+
+  <!-- OTP -->
+
+  <div
+    class="form-group"
+    *ngIf="otpSent">
+
+    <label>OTP</label>
+
+    <input
+      type="text"
+      [(ngModel)]="otp"
+      name="otp"
+      placeholder="Enter 6 digit OTP"
+      class="form-input"
+      maxlength="6"
+      [disabled]="isLoadingVO()"
+    />
+
+    <small>
+      OTP sent to +91 {{ mobile }}
+    </small>
+
+  </div>
+
+  <!-- Error Message -->
+
+  <div
+    *ngIf="errorMessage"
+    class="error-message">
+
+    ⚠️ {{ errorMessage }}
+
+  </div>
+
+  <!-- Success Message -->
+
+  <div
+    *ngIf="successMessage"
+    class="success-message">
+
+    ✓ {{ successMessage }}
+
+  </div>
+
+  <!-- Send OTP Button -->
+
+  <button
+    *ngIf="!otpSent"
+    class="login-btn"
+    type="button"
+    (click)="sendOtp()"
+    [disabled]="isLoading()">
+
+    <span
+      *ngIf="isLoading()"
+      class="loader">
+    </span>
+
+    {{ isLoading() ? 'Sending OTP...' : 'Send OTP' }}
+
+  </button>
+
+  <!-- Verify OTP Button -->
+
+  <button
+    *ngIf="otpSent"
+    class="login-btn"
+    type="button"
+    (click)="verifyOtp()"
+    [disabled]="isLoadingVO()">
+
+    <span
+      *ngIf="isLoadingVO()"
+      class="loader">
+    </span>
+
+    {{ isLoadingVO() ? 'Verifying OTP...' : 'Verify OTP' }}
+
+  </button>
+
+  <!-- Resend OTP -->
+
+  <div
+    class="resend-section"
+    *ngIf="otpSent">
+
+    <button
+      type="button"
+      class="resend-btn"
+      (click)="resendOtp()"
+      [disabled]="countdown() > 0">
+
+      {{ countdown() > 0
+          ? 'Resend OTP in ' + countdown() + ' sec'
+          : 'Resend OTP'
+      }}
+
+    </button>
+
+  </div>
+
+  <!-- Success Popup -->
+
+  <app-success-popup
+      [isVisible]="popupService.isVisible()"
+      [title]="popupService.title()"
+      [message]="popupService.message()"
+      [type]="popupService.type()"
+      (close)="closePopup()">
+  </app-success-popup>
+
+</div>

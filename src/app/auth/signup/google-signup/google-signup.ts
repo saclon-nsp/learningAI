@@ -41,7 +41,7 @@ export class GoogleSignup {
 
     //     this.isLoading.set(false);
     //     this.successMessage = 'Google Sign-In Successful';
-    //     localStorage.setItem('token', res.token);
+    //     sessionStorage.setItem('token', res.token);
     //     this.router.navigate(['/home']);
 
     //   },

@@ -12,6 +12,8 @@ export interface User {
   fullName?: string;
   phone_number?: string;
   otp?: string;
+  society_name?: string;
+  loginMethod?: string;
 }
 
 @Injectable({
@@ -70,6 +72,75 @@ export class AuthService {
     );
   }
 
+  userLogin(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/login/username`, user).pipe(
+      tap((res: any) => {
+
+        // store token in SESSION storage
+        sessionStorage.setItem('token', res.data.access_token);
+
+        // optional user state (for UI)
+        const user: User = {
+          firstName: res?.data?.user?.first_name,
+          lastName: res?.data?.user?.last_name,
+          loginMethod: "username",
+          society_name: "Shashikant Apt"
+        };
+
+        this.currentUser.set(user);
+        this.isLoggedIn.set(true);
+
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+      })
+    );
+  }
+
+  emailLogin(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/login/email`, user).pipe(
+      tap((res: any) => {
+
+        // store token in SESSION storage
+        sessionStorage.setItem('token', res.data.access_token);
+
+        // optional user state (for UI)
+        const user: User = {
+          firstName: res?.data?.user?.first_name,
+          lastName: res?.data?.user?.last_name,
+          loginMethod: "email",
+          society_name: "Shashikant Apt"
+        };
+
+        this.currentUser.set(user);
+        this.isLoggedIn.set(true);
+
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+      })
+    );
+  }
+
+  verifyLoginOtp(user: User) {
+    return this.http.post<any>(`${this.apiUrl}/v1/auth/login/otp`, user).pipe(
+      tap((res: any) => {
+
+        // store token in SESSION storage
+        sessionStorage.setItem('token', res.data.access_token);
+
+        // optional user state (for UI)
+        const user: User = {
+          firstName: res?.data?.user?.first_name,
+          lastName: res?.data?.user?.last_name,
+          loginMethod: "otp",
+          society_name: "Shashikant Apt"
+        };
+
+        this.currentUser.set(user);
+        this.isLoggedIn.set(true);
+
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+      })
+    );
+  }
+
   // ---------------- SESSION RESTORE ----------------
   checkLoggedIn(): void {
     const storedUser = sessionStorage.getItem('currentUser');
@@ -88,5 +159,7 @@ export class AuthService {
 
     sessionStorage.removeItem('currentUser');
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('society_name');
+
   }
 }
