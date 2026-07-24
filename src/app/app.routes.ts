@@ -15,5 +15,11 @@ export const routes: Routes = [
   },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  {
+   path: 'create-society',
+   loadComponent: () =>
+      import('./features/society/create-society/create-society')
+      .then(m => m.CreateSociety)
+  },
   { path: '**', redirectTo: '/login' }
 ];

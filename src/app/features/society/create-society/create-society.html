@@ -1,0 +1,1908 @@
+<div class="create-page">
+   <!--========================
+      Header
+      =========================-->
+   <div class="page-header">
+      <div class="header-content">
+         <h1>Create Society</h1>
+         <p>
+            Configure your society in a few simple steps.
+         </p>
+      </div>
+      <div class="header-icon">
+         🏢
+      </div>
+   </div>
+   <!--========================
+      Stepper
+      =========================-->
+   <div class="stepper">
+      <div class="step" [class.active]="currentStep>=1">
+         <div class="circle">1</div>
+         <span>Society</span>
+      </div>
+      <div class="line" [class.active]="currentStep>=2"></div>
+      <div class="step" [class.active]="currentStep>=2">
+         <div class="circle">2</div>
+         <span>Building</span>
+      </div>
+      <div class="line" [class.active]="currentStep>=3"></div>
+      <div class="step" [class.active]="currentStep>=3">
+         <div class="circle">3</div>
+         <span>Committee</span>
+      </div>
+      <div class="line" [class.active]="currentStep>=4"></div>
+      <div class="step" [class.active]="currentStep>=4">
+         <div class="circle">4</div>
+         <span>Review</span>
+      </div>
+   </div>
+   <form [formGroup]="societyForm">
+      <!--=========================================================
+         STEP 1
+         ==========================================================-->
+      <div class="glass-card" *ngIf="currentStep==1">
+         <h2>🏢 Society Information</h2>
+         <div class="form-grid">
+            <div class="form-group">
+               <label>Society Name *</label>
+               <input
+                  type="text"
+                  formControlName="societyName">
+            </div>
+            <div class="form-group">
+               <label>Registration Number</label>
+               <input
+                  type="text"
+                  formControlName="registrationNo">
+            </div>
+            <div class="form-group">
+               <label>Registration Date</label>
+               <input
+                  type="date"
+                  formControlName="registrationDate">
+            </div>
+            <div class="form-group">
+               <label>Society Type</label>
+               <select formControlName="societyType">
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                  <option>Mixed</option>
+               </select>
+            </div>
+            <div class="form-group">
+               <label>Construction Year</label>
+               <input
+                  type="number"
+                  formControlName="constructionYear">
+            </div>
+            <div class="form-group">
+               <label>Builder Name</label>
+               <input
+                  type="text"
+                  formControlName="builder">
+            </div>
+            <div class="form-group">
+               <label>Society Email</label>
+               <input
+                  type="email"
+                  formControlName="email">
+            </div>
+            <div class="form-group">
+               <label>WhatsApp Number</label>
+               <input
+                  type="text"
+                  formControlName="whatsapp">
+            </div>
+            <div class="form-group full-width">
+               <label>Description</label>
+               <textarea
+                  rows="4"
+                  formControlName="description">
+               </textarea>
+            </div>
+         </div>
+
+         <hr>
+
+        <h2>📑 Society Documents</h2>
+
+        <div class="form-grid">
+
+        <div class="form-group">
+            <label>Society Logo</label>
+            <input
+            type="file"
+            accept="image/*"
+            (change)="onLogoUpload($event)">
+            <small>PNG / JPG</small>
+        </div>
+
+        <div class="form-group">
+            <label>Registration Certificate</label>
+            <input
+            type="file"
+            accept=".pdf"
+            (change)="onRegistrationCertificateUpload($event)">
+            <small>Only PDF</small>
+        </div>
+
+        <div class="form-group">
+            <label>GST Number</label>
+            <input
+            type="text"
+            formControlName="gstNumber">
+        </div>
+
+        <div class="form-group">
+            <label>Society PAN</label>
+            <input
+            type="text"
+            formControlName="societyPan">
+        </div>
+
+        <div class="form-group">
+        <label>RERA Number</label>
+        <input
+            type="text"
+            formControlName="reraNumber"
+            placeholder="Enter RERA Registration Number">
+        </div>
+
+        </div>
+
+         <hr>
+         <h2>📍 Address</h2>
+         <div class="form-grid">
+            <div class="form-group full-width">
+               <label>Address Line 1</label>
+               <input
+                  type="text"
+                  formControlName="address1">
+            </div>
+            <div class="form-group full-width">
+               <label>Address Line 2</label>
+               <input
+                  type="text"
+                  formControlName="address2">
+            </div>
+            <div class="form-group">
+               <label>Area</label>
+               <input
+                  type="text"
+                  formControlName="area">
+            </div>
+            <div class="form-group">
+               <label>City</label>
+               <input
+                  type="text"
+                  formControlName="city">
+            </div>
+            <div class="form-group">
+               <label>State</label>
+               <input
+                  type="text"
+                  formControlName="state">
+            </div>
+            <div class="form-group">
+               <label>Pincode</label>
+               <input
+                  type="text"
+                  formControlName="pincode">
+            </div>
+         </div>
+
+         <hr>
+
+        <h2>🏦 Bank Details</h2>
+
+        <div class="form-grid">
+
+        <div class="form-group">
+            <label>Bank Name</label>
+            <input
+            type="text"
+            formControlName="bankName"
+            placeholder="Enter Bank Name">
+        </div>
+
+        <div class="form-group">
+            <label>Branch</label>
+            <input
+            type="text"
+            formControlName="bankBranch"
+            placeholder="Enter Branch Name">
+        </div>
+
+        <div class="form-group">
+            <label>Account Number</label>
+            <input
+            type="text"
+            formControlName="accountNumber"
+            placeholder="Enter Account Number">
+        </div>
+
+        <div class="form-group">
+            <label>IFSC Code</label>
+            <input
+            type="text"
+            formControlName="ifscCode"
+            placeholder="SBIN0001234">
+        </div>
+
+        <div class="form-group full-width">
+            <label>UPI ID</label>
+            <input
+            type="text"
+            formControlName="upiId"
+            placeholder="society@okaxis">
+        </div>
+
+        </div>
+      </div>
+      <!--=========================================================
+         STEP 2
+         ==========================================================-->
+      <div class="glass-card" *ngIf="currentStep==2">
+         <h2>🏙 Building Configuration</h2>
+         <!--=====================================
+            Basic Information
+            ======================================-->
+         <div class="accordion">
+            <div
+               class="accordion-header"
+               (click)="toggleSection('basic')">
+               <span>
+               🏢 Basic Information
+               </span>
+               <span>
+               {{isOpen.basic ? '▲' : '▼'}}
+               </span>
+            </div>
+            <div
+               class="accordion-body"
+               *ngIf="isOpen.basic">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>No. of Wings</label>
+                     <input
+                        type="number"
+                        formControlName="wings">
+                  </div>
+                  <div class="form-group">
+                     <label>Wing Naming Pattern</label>
+                     <select
+                        formControlName="wingPattern">
+                        <option value="alphabet">
+                           A, B, C...
+                        </option>
+                        <option value="number">
+                           1,2,3...
+                        </option>
+                        <option value="custom">
+                           Custom
+                        </option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Ground Floor
+            ======================================-->
+         <div class="accordion">
+            <div
+               class="accordion-header"
+               (click)="toggleSection('ground')">
+               <span>🏪 Ground Floor</span>
+               <span>{{ isOpen.ground ? '▲' : '▼' }}</span>
+            </div>
+            <div
+               class="accordion-body"
+               *ngIf="isOpen.ground">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Ground Floor Shops Available?</label>
+                     <select formControlName="groundShopAvailable">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                     </select>
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('groundShopAvailable')?.value=='Yes'">
+                     <label>No. of Shops on Ground Floor</label>
+                     <input
+                        type="number"
+                        formControlName="groundShopCount">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('groundShopAvailable')?.value=='Yes'">
+                     <label>Shop Number Prefix</label>
+                     <input
+                        type="text"
+                        placeholder="S-001"
+                        formControlName="groundShopPrefix">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Commercial Area
+            ======================================-->
+         <div class="accordion">
+            <div
+               class="accordion-header"
+               (click)="toggleSection('commercial')">
+               <span>🏬 Commercial Area</span>
+               <span>{{ isOpen.commercial ? '▲' : '▼' }}</span>
+            </div>
+            <div
+               class="accordion-body"
+               *ngIf="isOpen.commercial">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Commercial Floors Available?</label>
+                     <select formControlName="commercialAvailable">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                     </select>
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('commercialAvailable')?.value=='Yes'">
+                     <label>Commercial Floors Start From</label>
+                     <input
+                        type="number"
+                        formControlName="commercialStartFloor">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('commercialAvailable')?.value=='Yes'">
+                     <label>No. of Commercial Floors</label>
+                     <input
+                        type="number"
+                        formControlName="commercialFloors">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('commercialAvailable')?.value=='Yes'">
+                     <label>Shops Per Commercial Floor</label>
+                     <input
+                        type="number"
+                        formControlName="commercialShopsPerFloor">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('commercialAvailable')?.value=='Yes'">
+                     <label>Office Units Per Floor</label>
+                     <input
+                        type="number"
+                        formControlName="commercialOfficePerFloor">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Basement
+            ======================================-->
+         <div class="accordion">
+            <div
+               class="accordion-header"
+               (click)="toggleSection('basement')">
+               <span>🚗 Basement</span>
+               <span>{{ isOpen.basement ? '▲' : '▼' }}</span>
+            </div>
+            <div
+               class="accordion-body"
+               *ngIf="isOpen.basement">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Basement Available?</label>
+                     <select formControlName="basementAvailable">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                     </select>
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('basementAvailable')?.value=='Yes'">
+                     <label>No. of Basement Floors</label>
+                     <input
+                        type="number"
+                        formControlName="basementFloors">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('basementAvailable')?.value=='Yes'">
+                     <label>Parking Slots Per Basement</label>
+                     <input
+                        type="number"
+                        formControlName="parkingPerBasement">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('basementAvailable')?.value=='Yes'">
+                     <label>Storage Rooms Per Basement</label>
+                     <input
+                        type="number"
+                        formControlName="storageRooms">
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('basementAvailable')?.value=='Yes'">
+                     <label>Utility Rooms</label>
+                     <input
+                        type="number"
+                        formControlName="utilityRooms">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Residential Floors
+            ======================================-->
+         <div class="accordion">
+            <div class="accordion-header"
+               (click)="toggleSection('residential')">
+               <span>🏠 Residential Floors</span>
+               <span>{{ isOpen.residential ? '▲' : '▼' }}</span>
+            </div>
+            <div class="accordion-body"
+               *ngIf="isOpen.residential">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Residential Floors Start From</label>
+                     <input
+                        type="number"
+                        formControlName="residentialStartFloor">
+                  </div>
+                  <div class="form-group">
+                     <label>Total Residential Floors</label>
+                     <input
+                        type="number"
+                        formControlName="floors">
+                  </div>
+                  <div class="form-group">
+                     <label>Flats Per Floor</label>
+                     <input
+                        type="number"
+                        formControlName="flats">
+                  </div>
+                  <div class="form-group">
+                     <label>Flat Number Pattern</label>
+                     <select formControlName="flatPattern">
+                        <option value="101">101</option>
+                        <option value="A101">A101</option>
+                        <option value="101A">101A</option>
+                        <option value="A-101">A-101</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label>Lift Available</label>
+                     <select formControlName="liftAvailable">
+                        <option>No</option>
+                        <option>Yes</option>
+                     </select>
+                  </div>
+                  <div
+                     class="form-group"
+                     *ngIf="societyForm.get('liftAvailable')?.value=='Yes'">
+                     <label>No. of Lifts / Wing</label>
+                     <input
+                        type="number"
+                        formControlName="liftCount">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Parking
+            ======================================-->
+         <div class="accordion">
+            <div class="accordion-header"
+               (click)="toggleSection('parking')">
+               <span>🚘 Parking Configuration</span>
+               <span>{{ isOpen.parking ? '▲' : '▼' }}</span>
+            </div>
+            <div class="accordion-body"
+               *ngIf="isOpen.parking">
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Resident Parking</label>
+                     <input
+                        type="number"
+                        formControlName="residentParking">
+                  </div>
+                  <div class="form-group">
+                     <label>Visitor Parking</label>
+                     <input
+                        type="number"
+                        formControlName="visitorParking">
+                  </div>
+                  <div class="form-group">
+                     <label>Two Wheeler Parking</label>
+                     <input
+                        type="number"
+                        formControlName="twoWheelerParking">
+                  </div>
+                  <div class="form-group">
+                     <label>Four Wheeler Parking</label>
+                     <input
+                        type="number"
+                        formControlName="fourWheelerParking">
+                  </div>
+                  <div class="form-group">
+                     <label>EV Charging Slots</label>
+                     <input
+                        type="number"
+                        formControlName="evParking">
+                  </div>
+                  <div class="form-group">
+                     <label>Disabled Parking</label>
+                     <input
+                        type="number"
+                        formControlName="disabledParking">
+                  </div>
+                  <div class="form-group">
+                     <label>Parking Allocation</label>
+                     <select formControlName="parkingAllocation">
+                        <option>One Parking Per Flat</option>
+                        <option>Manual Allocation</option>
+                        <option>Lottery System</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!--=====================================
+            Amenities
+            ======================================-->
+         <div class="accordion">
+            <div class="accordion-header"
+               (click)="toggleSection('amenities')">
+               <span>🎯 Amenities</span>
+               <span>{{ isOpen.amenities ? '▲' : '▼' }}</span>
+            </div>
+            <div class="accordion-body"
+               *ngIf="isOpen.amenities">
+               <!-- <div class="checkbox-grid">
+                  <label><input type="checkbox" formControlName="garden"> Garden</label>
+                  <label><input type="checkbox" formControlName="gym"> Gym</label>
+                  <label><input type="checkbox" formControlName="clubHouse"> Club House</label>
+                  <label><input type="checkbox" formControlName="swimmingPool"> Swimming Pool</label>
+                  <label><input type="checkbox" formControlName="communityHall"> Community Hall</label>
+                  <label><input type="checkbox" formControlName="childrenPlayArea"> Children Play Area</label>
+                  <label><input type="checkbox" formControlName="temple"> Temple</label>
+                  <label><input type="checkbox" formControlName="library"> Library</label>
+                  <label><input type="checkbox" formControlName="cctv"> CCTV</label>
+                  <label><input type="checkbox" formControlName="fireSafety"> Fire Safety</label>
+                  <label><input type="checkbox" formControlName="solar"> Solar System</label>
+                  <label><input type="checkbox" formControlName="rainWaterHarvesting"> Rain Water Harvesting</label>
+               </div> -->
+
+               <div class="checkbox-grid">
+
+                <label><input type="checkbox" formControlName="securityCabin"> Security Cabin</label>
+
+                <label><input type="checkbox" formControlName="reception"> Reception</label>
+
+                <label><input type="checkbox" formControlName="intercom"> Intercom</label>
+
+                <label><input type="checkbox" formControlName="gasPipeline"> Gas Pipeline</label>
+
+                <label><input type="checkbox" formControlName="solar"> Solar System</label>
+
+                <label><input type="checkbox" formControlName="rainWaterHarvesting"> Rain Water Harvesting</label>
+
+                <label><input type="checkbox" formControlName="cctv"> CCTV Surveillance</label>
+
+                <label><input type="checkbox" formControlName="visitorManagement"> Visitor Management</label>
+
+                <label><input type="checkbox" formControlName="societyOffice"> Society Office</label>
+
+                <label><input type="checkbox" formControlName="garbageCollection"> Garbage Collection</label>
+
+                <label><input type="checkbox" formControlName="roPlant"> RO Plant</label>
+
+                <label><input type="checkbox" formControlName="garden"> Garden</label>
+
+                <label><input type="checkbox" formControlName="gym"> Gym</label>
+
+                <label><input type="checkbox" formControlName="clubHouse"> Club House</label>
+
+                <label><input type="checkbox" formControlName="swimmingPool"> Swimming Pool</label>
+
+                <label><input type="checkbox" formControlName="communityHall"> Community Hall</label>
+
+                <label><input type="checkbox" formControlName="childrenPlayArea"> Children's Play Area</label>
+
+                <label><input type="checkbox" formControlName="library"> Library</label>
+
+                <label><input type="checkbox" formControlName="temple"> Temple</label>
+
+                <label><input type="checkbox" formControlName="fireSafety"> Fire Safety Equipment</label>
+
+                </div>
+            </div>
+         </div>
+
+         <!--=====================================
+        Lift Details
+        ======================================-->
+        <div class="accordion">
+
+            <div
+                class="accordion-header"
+                (click)="toggleSection('liftDetails')">
+
+                <span>🛗 Lift Details</span>
+                <span>{{ isOpen.liftDetails ? '▲' : '▼' }}</span>
+
+            </div>
+
+        <div
+            class="accordion-body"
+            *ngIf="isOpen.liftDetails">
+
+            <div class="form-grid">
+
+            <div class="form-group">
+                <label>Passenger Lifts</label>
+                <input
+                type="number"
+                min="0"
+                formControlName="passengerLift">
+            </div>
+
+            <div class="form-group">
+                <label>Service Lifts</label>
+                <input
+                type="number"
+                min="0"
+                formControlName="serviceLift">
+            </div>
+
+            <div class="form-group">
+                <label>Lift Company</label>
+                <input
+                type="text"
+                formControlName="liftCompany"
+                placeholder="e.g. Otis, KONE, Johnson">
+            </div>
+
+            <div class="form-group">
+                <label>AMC Expiry Date</label>
+                <input
+                type="date"
+                formControlName="liftAmcDate">
+            </div>
+
+            </div>
+
+        </div>
+
+        </div>
+
+        <!--=====================================
+        Water Tank
+        ======================================-->
+        <div class="accordion">
+
+            <div
+                class="accordion-header"
+                (click)="toggleSection('waterTank')">
+
+                <span>💧 Water Tank</span>
+                <span>{{ isOpen.waterTank ? '▲' : '▼' }}</span>
+
+            </div>
+
+            <div
+                class="accordion-body"
+                *ngIf="isOpen.waterTank">
+
+                <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Underground Tank</label>
+                    <select formControlName="undergroundTank">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Overhead Tank</label>
+                    <select formControlName="overheadTank">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Capacity (Litres)</label>
+                    <input
+                    type="number"
+                    formControlName="waterTankCapacity"
+                    placeholder="500000">
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--=====================================
+        DG Backup
+        ======================================-->
+        <div class="accordion">
+
+            <div
+                class="accordion-header"
+                (click)="toggleSection('dgBackup')">
+
+                <span>⚡ DG Backup</span>
+                <span>{{ isOpen.dgBackup ? '▲' : '▼' }}</span>
+
+            </div>
+
+            <div
+                class="accordion-body"
+                *ngIf="isOpen.dgBackup">
+
+                <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Generator Available</label>
+                    <select formControlName="generatorAvailable">
+                    <option>Yes</option>
+                    <option>No</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('generatorAvailable')?.value=='Yes'">
+                    <label>Generator Capacity (kVA)</label>
+                    <input
+                    type="text"
+                    formControlName="generatorCapacity"
+                    placeholder="125 kVA">
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('generatorAvailable')?.value=='Yes'">
+                    <label>Vendor Name</label>
+                    <input
+                    type="text"
+                    formControlName="generatorVendor"
+                    placeholder="Vendor Name">
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('generatorAvailable')?.value=='Yes'">
+                    <label>AMC Expiry Date</label>
+                    <input
+                    type="date"
+                    formControlName="generatorAmcDate">
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('generatorAvailable')?.value=='Yes'">
+                    <label>Fuel Type</label>
+                    <select formControlName="generatorFuel">
+                    <option>Diesel</option>
+                    <option>Gas</option>
+                    <option>Electric</option>
+                    </select>
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--=====================================
+        Fire Safety System
+        ======================================-->
+        <div class="accordion">
+
+            <div
+                class="accordion-header"
+                (click)="toggleSection('fireSystem')">
+
+                <span>🔥 Fire Safety System</span>
+                <span>{{ isOpen.fireSystem ? '▲' : '▼' }}</span>
+
+            </div>
+
+            <div
+                class="accordion-body"
+                *ngIf="isOpen.fireSystem">
+
+                <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Fire System Available</label>
+                    <select formControlName="fireSystemAvailable">
+                    <option>Yes</option>
+                    <option>No</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Fire Pump</label>
+                    <select formControlName="firePump">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Fire Tank Capacity (Litres)</label>
+                    <input
+                    type="number"
+                    formControlName="fireTankCapacity"
+                    placeholder="100000">
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Hydrant System</label>
+                    <select formControlName="hydrantSystem">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Sprinkler System</label>
+                    <select formControlName="sprinklerSystem">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Smoke Detectors</label>
+                    <select formControlName="smokeDetectors">
+                    <option>Available</option>
+                    <option>Not Available</option>
+                    </select>
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>Vendor</label>
+                    <input
+                    type="text"
+                    formControlName="fireVendor"
+                    placeholder="Vendor Name">
+                </div>
+
+                <div
+                    class="form-group"
+                    *ngIf="societyForm.get('fireSystemAvailable')?.value=='Yes'">
+                    <label>AMC Expiry Date</label>
+                    <input
+                    type="date"
+                    formControlName="fireAmcDate">
+                </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+      </div>
+      <!-- END OF STEP 2 -->
+      <!--=========================================================
+         STEP 3 - COMMITTEE DETAILS
+         ==========================================================-->
+      <div class="glass-card" *ngIf="currentStep==3">
+        <h2>👥 Committee Members</h2>
+        <p class="section-subtitle">
+        Enter details of the managing committee members.
+        </p>
+        <div class="committee-grid">
+            <!-- Chairman -->
+            <div class="member-card">
+               <div class="member-header">
+                  <div class="member-avatar">
+                     👨
+                  </div>
+                  <div>
+                     <h3>Chairman</h3>
+                     <small>Society Head</small>
+                  </div>
+               </div>
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Full Name</label>
+                     <input
+                        type="text"
+                        formControlName="chairmanName">
+                  </div>
+                  <div class="form-group">
+                     <label>Wing</label>
+                     <input
+                        type="text"
+                        formControlName="chairmanWing">
+                  </div>
+                  <div class="form-group">
+                     <label>Flat No</label>
+                     <input
+                        type="text"
+                        formControlName="chairmanFlat">
+                  </div>
+                  <div class="form-group">
+                     <label>Mobile</label>
+                     <input
+                        type="text"
+                        formControlName="chairmanMobile">
+                  </div>
+                  <div class="form-group">
+                     <label>Email</label>
+                     <input
+                        type="email"
+                        formControlName="chairmanEmail">
+                  </div>
+                  <div class="form-group">
+                     <label>WhatsApp</label>
+                     <input
+                        type="text"
+                        formControlName="chairmanWhatsapp">
+                  </div>
+                  <hr>
+                    <div class="document-box">
+
+                        <h4>📄 Chairman Documents</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Photo</label>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    (change)="onFileUpload($event,'chairmanPhoto')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Aadhaar Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'chairmanAadhar')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>PAN Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'chairmanPan')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Start Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="chairmanStartDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="chairmanEndDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Emergency Contact</label>
+
+                                <input
+                                    type="text"
+                                    formControlName="chairmanEmergencyContact">
+
+                            </div>
+
+                        </div>
+                    </div>
+               </div>
+            </div>
+
+            <!-- Secretary -->
+            <div class="member-card">
+               <div class="member-header">
+                  <div class="member-avatar">
+                     👩
+                  </div>
+                  <div>
+                     <h3>Secretary</h3>
+                     <small>Administration</small>
+                  </div>
+               </div>
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Full Name</label>
+                     <input
+                        type="text"
+                        formControlName="secretaryName">
+                  </div>
+                  <div class="form-group">
+                     <label>Wing</label>
+                     <input
+                        type="text"
+                        formControlName="secretaryWing">
+                  </div>
+                  <div class="form-group">
+                     <label>Flat No</label>
+                     <input
+                        type="text"
+                        formControlName="secretaryFlat">
+                  </div>
+                  <div class="form-group">
+                     <label>Mobile</label>
+                     <input
+                        type="text"
+                        formControlName="secretaryMobile">
+                  </div>
+                  <div class="form-group">
+                     <label>Email</label>
+                     <input
+                        type="email"
+                        formControlName="secretaryEmail">
+                  </div>
+                  <div class="form-group">
+                     <label>WhatsApp</label>
+                     <input
+                        type="text"
+                        formControlName="secretaryWhatsapp">
+                  </div>
+                    <div class="document-box">
+
+                        <h4>📄 Secretary Documents</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Photo</label>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    (change)="onFileUpload($event,'secretaryPhoto')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Aadhaar Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'secretaryAadhar')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>PAN Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'secretaryPan')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Start Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="secretaryStartDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="secretaryEndDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Emergency Contact</label>
+
+                                <input
+                                    type="text"
+                                    formControlName="secretaryEmergencyContact">
+
+                            </div>
+
+                        </div>
+                    </div>    
+               </div>
+            </div>
+            <!-- Treasurer -->
+            <div class="member-card">
+               <div class="member-header">
+                  <div class="member-avatar">
+                     👨‍💼
+                  </div>
+                  <div>
+                     <h3>Treasurer</h3>
+                     <small>Finance</small>
+                  </div>
+               </div>
+               <div class="form-grid">
+                  <div class="form-group">
+                     <label>Full Name</label>
+                     <input
+                        type="text"
+                        formControlName="treasurerName">
+                  </div>
+                  <div class="form-group">
+                     <label>Wing</label>
+                     <input
+                        type="text"
+                        formControlName="treasurerWing">
+                  </div>
+                  <div class="form-group">
+                     <label>Flat No</label>
+                     <input
+                        type="text"
+                        formControlName="treasurerFlat">
+                  </div>
+                  <div class="form-group">
+                     <label>Mobile</label>
+                     <input
+                        type="text"
+                        formControlName="treasurerMobile">
+                  </div>
+                  <div class="form-group">
+                     <label>Email</label>
+                     <input
+                        type="email"
+                        formControlName="treasurerEmail">
+                  </div>
+                  <div class="form-group">
+                     <label>WhatsApp</label>
+                     <input
+                        type="text"
+                        formControlName="treasurerWhatsapp">
+                  </div>
+                    <div class="document-box">
+                        <h4>📄 Treasurer Documents</h4>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Photo</label>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    (change)="onFileUpload($event,'treasurerPhoto')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Aadhaar Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'treasurerAadhar')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>PAN Card</label>
+
+                                <input
+                                    type="file"
+                                    accept=".pdf,image/*"
+                                    (change)="onFileUpload($event,'treasurerPan')">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Start Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="treasurerStartDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>End Date</label>
+
+                                <input
+                                    type="date"
+                                    formControlName="treasurerEndDate">
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>Emergency Contact</label>
+
+                                <input
+                                    type="text"
+                                    formControlName="treasurerEmergencyContact">
+
+                            </div>
+
+                        </div>
+                    </div>   
+               </div>
+            </div>
+            
+            <!-- Manager -->
+            <div class="member-card">
+
+                <div class="member-header">
+                    <div class="member-avatar">👨‍💼</div>
+
+                    <div>
+                        <h3>Society Manager</h3>
+                        <small>Operations</small>
+                    </div>
+
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            formControlName="managerName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input
+                            type="text"
+                            formControlName="managerMobile">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            formControlName="managerEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Photo</label>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            (change)="onFileUpload($event,'managerPhoto')">
+
+                    </div>
+
+                    <div class="form-group">
+                    <label>Aadhaar Card</label>
+                    <input
+                        type="file"
+                        accept=".pdf,image/*"
+                        (change)="onFileUpload($event,'managerAadhar')">
+                    </div>
+
+                    <div class="form-group">
+                    <label>PAN Card</label>
+                    <input
+                        type="file"
+                        accept=".pdf,image/*"
+                        (change)="onFileUpload($event,'managerPan')">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Accountant -->
+            <div class="member-card">
+
+                <div class="member-header">
+                    <div class="member-avatar">💰</div>
+
+                    <div>
+                        <h3>Accountant</h3>
+                        <small>Finance</small>
+                    </div>
+
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input
+                            type="text"
+                            formControlName="accountantName">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input
+                            type="text"
+                            formControlName="accountantMobile">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            formControlName="accountantEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Photo</label>
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            (change)="onFileUpload($event,'accountantPhoto')">
+
+                    </div>
+
+                    <div class="form-group">
+                    <label>Aadhaar Card</label>
+                    <input
+                        type="file"
+                        accept=".pdf,image/*"
+                        (change)="onFileUpload($event,'accountantAadhar')">
+                    </div>
+
+                    <div class="form-group">
+                    <label>PAN Card</label>
+                    <input
+                        type="file"
+                        accept=".pdf,image/*"
+                        (change)="onFileUpload($event,'accountantPan')">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- STAFF SECTION START -->
+
+        <div class="staff-container">
+
+            <div class="section-title">
+                👷 Society Staff
+            </div>
+
+            <div class="staff-table-wrapper">
+
+                <table class="staff-table">
+
+                    <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Joining Date</th>
+                        <th>Photo</th>
+                        <th>Aadhaar</th>
+                        <th>PAN</th>
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                🛡️ Watchman
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="watchmanName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="watchmanMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="watchmanJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'watchmanPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'watchmanAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'watchmanPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                🧹 Cleaner 
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="cleanerName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="cleanerMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="cleanerJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'cleanerPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'cleanerAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'cleanerPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                ⚡ Electrician
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="electricianName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="electricianMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="electricianJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'electricianPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'electricianAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'electricianPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                🌳 Gardener 
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="gardenerName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="gardenerMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="gardenerJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'gardenerPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'gardenerAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'gardenerPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                🛗 Lift Operator
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="liftOperatorName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="liftOperatorMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="liftOperatorJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'liftOperatorPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'liftOperatorAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'liftOperatorPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                🚰 Plumber 
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="plumberName">
+                            </td>
+
+                            <td>
+                                <input class="staff-input"
+                                formControlName="plumberMobile">
+                            </td>
+
+
+                            <td>
+                                <input class="staff-input"
+                                type="date"
+                                formControlName="plumberJoiningDate">
+                            </td>
+
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'plumberPhoto')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'plumberAadhar')">
+                                </label>
+                            </td>
+
+                            <td>
+                                <label class="upload-btn">
+                                    Upload
+                                    <input type="file"
+                                    hidden
+                                    (change)="onFileUpload($event,'plumberPan')">
+                                </label>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+      </div>
+      <!--=========================================================
+         STEP 4 - REVIEW
+         ==========================================================-->
+      <div class="glass-card" *ngIf="currentStep==4">
+         <h2>📋 Review & Create Society</h2>
+         <p class="section-subtitle">
+            Verify all information before creating the society.
+         </p>
+         <!-- Society -->
+         <div class="review-section">
+            <h3>🏢 Society Information</h3>
+            <div class="review-grid">
+               <div class="review-item">
+                  <span>Society Name</span>
+                  <strong>{{ societyForm.value.societyName }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Registration No.</span>
+                  <strong>{{ societyForm.value.registrationNo }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Society Type</span>
+                  <strong>{{ societyForm.value.societyType }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>City</span>
+                  <strong>{{ societyForm.value.city }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>State</span>
+                  <strong>{{ societyForm.value.state }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>WhatsApp</span>
+                  <strong>{{ societyForm.value.whatsapp }}</strong>
+               </div>
+            </div>
+         </div>
+         <!-- Building -->
+         <div class="review-section">
+            <h3>🏙 Building Configuration</h3>
+            <div class="review-grid">
+               <div class="review-item">
+                  <span>Wings</span>
+                  <strong>{{ societyForm.value.wings }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Residential Floors</span>
+                  <strong>{{ societyForm.value.floors }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Flats Per Floor</span>
+                  <strong>{{ societyForm.value.flats }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Commercial Floors</span>
+                  <strong>{{ societyForm.value.commercialFloors }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Basement Floors</span>
+                  <strong>{{ societyForm.value.basementFloors }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Lifts / Wing</span>
+                  <strong>{{ societyForm.value.liftCount }}</strong>
+               </div>
+            </div>
+         </div>
+         <!-- Parking -->
+         <div class="review-section">
+            <h3>🚘 Parking Summary</h3>
+            <div class="review-grid">
+               <div class="review-item">
+                  <span>Resident Parking</span>
+                  <strong>{{ societyForm.value.residentParking }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Visitor Parking</span>
+                  <strong>{{ societyForm.value.visitorParking }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Two Wheeler</span>
+                  <strong>{{ societyForm.value.twoWheelerParking }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Four Wheeler</span>
+                  <strong>{{ societyForm.value.fourWheelerParking }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>EV Charging</span>
+                  <strong>{{ societyForm.value.evParking }}</strong>
+               </div>
+            </div>
+         </div>
+         <!-- Committee -->
+         <div class="review-section">
+            <h3>👥 Committee</h3>
+            <div class="review-grid">
+               <div class="review-item">
+                  <span>Chairman</span>
+                  <strong>{{ societyForm.value.chairmanName }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Secretary</span>
+                  <strong>{{ societyForm.value.secretaryName }}</strong>
+               </div>
+               <div class="review-item">
+                  <span>Treasurer</span>
+                  <strong>{{ societyForm.value.treasurerName }}</strong>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--=========================================================
+         FOOTER BUTTONS
+         ==========================================================-->
+      <div class="footer-buttons">
+         <button
+         type="button"
+         class="btn-secondary"
+         *ngIf="currentStep>1"
+         (click)="previousStep()">
+         ← Previous
+         </button>
+         <button
+         type="button"
+         class="btn-primary"
+         *ngIf="currentStep<4"
+         (click)="nextStep()">
+         Next →
+         </button>
+         <button
+         type="button"
+         class="btn-success"
+         *ngIf="currentStep==4"
+         (click)="submit()">
+         🚀 Create Society
+         </button>
+      </div>
+   </form>
+</div>
