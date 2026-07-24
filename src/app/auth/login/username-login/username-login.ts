@@ -82,7 +82,7 @@ export class UsernameLogin implements OnInit {
         next: (res: any) => {
 
           console.log('Login Success', res);
-          debugger
+
           this.isLoading.set(false);
 
           // Save user if required

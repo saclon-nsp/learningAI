@@ -79,7 +79,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe({
 
       next: (res: any) => {
-        debugger;
 
         this.isLoading.set(false); // 🔥 stop immediately
 
@@ -98,7 +97,6 @@ export class LoginComponent implements OnInit {
       },
 
       error: (err) => {
-        debugger;
 
         this.isLoading.set(false); // 🔥 MUST be first line
 

@@ -249,7 +249,6 @@ export class OtpLogin {
   closePopup(): void {
 
     this.popupService.close();
-    debugger;
     if (this.redirectToHome()) {
       this.authService.isLoggedIn.set(true);
       this.router.navigate(['/home']);

@@ -81,8 +81,8 @@ export class AuthService {
 
         // optional user state (for UI)
         const user: User = {
-          firstName: res?.data?.user?.first_name,
-          lastName: res?.data?.user?.last_name,
+          firstName: res?.data?.user?.first_name.toUpperCase(),
+          lastName: res?.data?.user?.last_name.toUpperCase(),
           loginMethod: "username",
           society_name: "Shashikant Apt"
         };
@@ -104,8 +104,8 @@ export class AuthService {
 
         // optional user state (for UI)
         const user: User = {
-          firstName: res?.data?.user?.first_name,
-          lastName: res?.data?.user?.last_name,
+          firstName: res?.data?.user?.first_name.toUpperCase(),
+          lastName: res?.data?.user?.last_name.toUpperCase(),
           loginMethod: "email",
           society_name: "Shashikant Apt"
         };
@@ -127,8 +127,8 @@ export class AuthService {
 
         // optional user state (for UI)
         const user: User = {
-          firstName: res?.data?.user?.first_name,
-          lastName: res?.data?.user?.last_name,
+          firstName: res?.data?.user?.first_name.toUpperCase(),
+          lastName: res?.data?.user?.last_name.toUpperCase(),
           loginMethod: "otp",
           society_name: "Shashikant Apt"
         };

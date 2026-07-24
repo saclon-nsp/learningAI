@@ -3,8 +3,8 @@
     <div class="navbar-content">
       <div class="navbar-brand">
         <img
-          src="assets/images/sms-logo.png"
-          alt="SMS Logo"
+          src="assets/images/smh-logo.jpg"
+          alt="SMH Logo"
           class="navbar-logo-img">
       </div>
       <div class="navbar-user">
@@ -20,15 +20,26 @@
 
   <div class="main-content">
     <div class="welcome-card">
-      <h1>Welcome to Society Management System! 👋</h1>
-      <p>You have successfully logged in to SMS</p>
+      <h1>Welcome to Society Management Hub! 👋</h1>
+      <p class="slogan">We Build Better Communities Through Digital Innovation.</p>
       
       <div class="user-details">
         <h3>Your Account Information:</h3>
         <div class="info-box">
-          <p><strong>User Name:</strong> {{ currentUser()?.firstName }} {{ currentUser()?.lastName }}</p>
-          <p><strong>Society:</strong> {{ currentUser()?.society_name }}</p>
-          <p><strong>Login Time:</strong> {{ now | date:'medium' }}</p>
+          <p>
+            <span class="label">User Name</span>
+            <span class="value">{{ currentUser()?.firstName }} {{ currentUser()?.lastName }}</span>
+          </p>
+
+          <p>
+            <span class="label">Society</span>
+            <span class="value">{{ currentUser()?.society_name }}</span>
+          </p>
+
+          <p>
+            <span class="label">Login Method</span>
+            <span class="value">{{ currentUser()?.loginMethod }}</span>
+          </p>
         </div>
       </div>
 
