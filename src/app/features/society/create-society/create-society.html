@@ -92,6 +92,8 @@
                <label>WhatsApp Number</label>
                <input
                   type="text"
+                  maxlength="10"
+                  appNumbersOnly
                   formControlName="whatsapp">
             </div>
             <div class="form-group full-width">
@@ -188,6 +190,8 @@
                <label>Pincode</label>
                <input
                   type="text"
+                  maxlength="10"
+                  appNumbersOnly
                   formControlName="pincode">
             </div>
          </div>
@@ -218,6 +222,8 @@
             <label>Account Number</label>
             <input
             type="text"
+            maxlength="6"
+            appNumbersOnly
             formControlName="accountNumber"
             placeholder="Enter Account Number">
         </div>
@@ -582,49 +588,28 @@
                   <label><input type="checkbox" formControlName="rainWaterHarvesting"> Rain Water Harvesting</label>
                </div> -->
 
-               <div class="checkbox-grid">
-
-                <label><input type="checkbox" formControlName="securityCabin"> Security Cabin</label>
-
-                <label><input type="checkbox" formControlName="reception"> Reception</label>
-
-                <label><input type="checkbox" formControlName="intercom"> Intercom</label>
-
-                <label><input type="checkbox" formControlName="gasPipeline"> Gas Pipeline</label>
-
-                <label><input type="checkbox" formControlName="solar"> Solar System</label>
-
-                <label><input type="checkbox" formControlName="rainWaterHarvesting"> Rain Water Harvesting</label>
-
-                <label><input type="checkbox" formControlName="cctv"> CCTV Surveillance</label>
-
-                <label><input type="checkbox" formControlName="visitorManagement"> Visitor Management</label>
-
-                <label><input type="checkbox" formControlName="societyOffice"> Society Office</label>
-
-                <label><input type="checkbox" formControlName="garbageCollection"> Garbage Collection</label>
-
-                <label><input type="checkbox" formControlName="roPlant"> RO Plant</label>
-
-                <label><input type="checkbox" formControlName="garden"> Garden</label>
-
-                <label><input type="checkbox" formControlName="gym"> Gym</label>
-
-                <label><input type="checkbox" formControlName="clubHouse"> Club House</label>
-
-                <label><input type="checkbox" formControlName="swimmingPool"> Swimming Pool</label>
-
-                <label><input type="checkbox" formControlName="communityHall"> Community Hall</label>
-
-                <label><input type="checkbox" formControlName="childrenPlayArea"> Children's Play Area</label>
-
-                <label><input type="checkbox" formControlName="library"> Library</label>
-
-                <label><input type="checkbox" formControlName="temple"> Temple</label>
-
-                <label><input type="checkbox" formControlName="fireSafety"> Fire Safety Equipment</label>
-
-                </div>
+               <div class="amenities-grid">
+                  <label class="amenity-option"><input type="checkbox" formControlName="securityCabin"><span>Security Cabin</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="reception"><span>Reception</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="intercom"><span>Intercom</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="gasPipeline"><span>Gas Pipeline</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="solar"><span>Solar System</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="rainWaterHarvesting"><span>Rain Water Harvesting</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="cctv"><span>CCTV Surveillance</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="visitorManagement"><span>Visitor Management</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="societyOffice"><span>Society Office</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="garbageCollection"><span>Garbage Collection</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="roPlant"><span>RO Plant</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="garden"><span>Garden</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="gym"><span>Gym</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="clubHouse"><span>Club House</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="swimmingPool"><span>Swimming Pool</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="communityHall"><span>Community Hall</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="childrenPlayArea"><span>Children's Play Area</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="library"><span>Library</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="temple"><span>Temple</span></label>
+                  <label class="amenity-option"><input type="checkbox" formControlName="fireSafety"><span>Fire Safety Equipment</span></label>
+               </div>
             </div>
          </div>
 
@@ -925,16 +910,17 @@
         <div class="committee-grid">
             <!-- Chairman -->
             <div class="member-card">
-               <div class="member-header">
+               <div class="member-header" (click)="toggleSection('chairman')" [attr.aria-expanded]="isOpen.chairman">
                   <div class="member-avatar">
-                     👨
+                     👔
                   </div>
                   <div>
                      <h3>Chairman</h3>
                      <small>Society Head</small>
                   </div>
+                  <span class="member-toggle">{{ isOpen.chairman ? '−' : '+' }}</span>
                </div>
-               <div class="form-grid">
+               <div class="form-grid" *ngIf="isOpen.chairman">
                   <div class="form-group">
                      <label>Full Name</label>
                      <input
@@ -957,6 +943,8 @@
                      <label>Mobile</label>
                      <input
                         type="text"
+                        maxlength="6"
+                        appNumbersOnly
                         formControlName="chairmanMobile">
                   </div>
                   <div class="form-group">
@@ -969,94 +957,97 @@
                      <label>WhatsApp</label>
                      <input
                         type="text"
+                        maxlength="6"
+                        appNumbersOnly
                         formControlName="chairmanWhatsapp">
                   </div>
-                  <hr>
-                    <div class="document-box">
 
-                        <h4>📄 Chairman Documents</h4>
+                  <div class="document-box">
 
-                        <div class="form-grid">
+                     <h4>📄 Chairman Documents</h4>
 
-                            <div class="form-group">
-                                <label>Photo</label>
+                     <div class="form-grid">
 
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    (change)="onFileUpload($event,'chairmanPhoto')">
+                           <div class="form-group">
+                              <label>Photo</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept="image/*"
+                                 (change)="onFileUpload($event,'chairmanPhoto')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Aadhaar Card</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="file"
-                                    accept=".pdf,image/*"
-                                    (change)="onFileUpload($event,'chairmanAadhar')">
+                              <label>Aadhaar Card</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept=".pdf,image/*"
+                                 (change)="onFileUpload($event,'chairmanAadhar')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>PAN Card</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="file"
-                                    accept=".pdf,image/*"
-                                    (change)="onFileUpload($event,'chairmanPan')">
+                              <label>PAN Card</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept=".pdf,image/*"
+                                 (change)="onFileUpload($event,'chairmanPan')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Start Date</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="date"
-                                    formControlName="chairmanStartDate">
+                              <label>Start Date</label>
 
-                            </div>
+                              <input
+                                 type="date"
+                                 formControlName="chairmanStartDate">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>End Date</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="date"
-                                    formControlName="chairmanEndDate">
+                              <label>End Date</label>
 
-                            </div>
+                              <input
+                                 type="date"
+                                 formControlName="chairmanEndDate">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Emergency Contact</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="text"
-                                    formControlName="chairmanEmergencyContact">
+                              <label>Emergency Contact</label>
 
-                            </div>
+                              <input
+                                 type="text"
+                                 formControlName="chairmanEmergencyContact">
 
-                        </div>
-                    </div>
+                           </div>
+
+                     </div>
+                  </div>
                </div>
             </div>
 
             <!-- Secretary -->
             <div class="member-card">
-               <div class="member-header">
+               <div class="member-header" (click)="toggleSection('secretary')" [attr.aria-expanded]="isOpen.secretary">
                   <div class="member-avatar">
-                     👩
+                     📝
                   </div>
                   <div>
                      <h3>Secretary</h3>
                      <small>Administration</small>
                   </div>
+                  <span class="member-toggle">{{ isOpen.secretary ? '−' : '+' }}</span>
                </div>
-               <div class="form-grid">
+               <div class="form-grid" *ngIf="isOpen.secretary">
                   <div class="form-group">
                      <label>Full Name</label>
                      <input
@@ -1079,6 +1070,8 @@
                      <label>Mobile</label>
                      <input
                         type="text"
+                        maxlength="6"
+                        appNumbersOnly
                         formControlName="secretaryMobile">
                   </div>
                   <div class="form-group">
@@ -1091,92 +1084,96 @@
                      <label>WhatsApp</label>
                      <input
                         type="text"
+                        maxlength="6"
+                        appNumbersOnly
                         formControlName="secretaryWhatsapp">
                   </div>
-                    <div class="document-box">
 
-                        <h4>📄 Secretary Documents</h4>
+                  <div class="document-box">
 
-                        <div class="form-grid">
+                     <h4>📄 Secretary Documents</h4>
 
-                            <div class="form-group">
-                                <label>Photo</label>
+                     <div class="form-grid">
 
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    (change)="onFileUpload($event,'secretaryPhoto')">
+                           <div class="form-group">
+                              <label>Photo</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept="image/*"
+                                 (change)="onFileUpload($event,'secretaryPhoto')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Aadhaar Card</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="file"
-                                    accept=".pdf,image/*"
-                                    (change)="onFileUpload($event,'secretaryAadhar')">
+                              <label>Aadhaar Card</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept=".pdf,image/*"
+                                 (change)="onFileUpload($event,'secretaryAadhar')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>PAN Card</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="file"
-                                    accept=".pdf,image/*"
-                                    (change)="onFileUpload($event,'secretaryPan')">
+                              <label>PAN Card</label>
 
-                            </div>
+                              <input
+                                 type="file"
+                                 accept=".pdf,image/*"
+                                 (change)="onFileUpload($event,'secretaryPan')">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Start Date</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="date"
-                                    formControlName="secretaryStartDate">
+                              <label>Start Date</label>
 
-                            </div>
+                              <input
+                                 type="date"
+                                 formControlName="secretaryStartDate">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>End Date</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="date"
-                                    formControlName="secretaryEndDate">
+                              <label>End Date</label>
 
-                            </div>
+                              <input
+                                 type="date"
+                                 formControlName="secretaryEndDate">
 
-                            <div class="form-group">
+                           </div>
 
-                                <label>Emergency Contact</label>
+                           <div class="form-group">
 
-                                <input
-                                    type="text"
-                                    formControlName="secretaryEmergencyContact">
+                              <label>Emergency Contact</label>
 
-                            </div>
+                              <input
+                                 type="text"
+                                 formControlName="secretaryEmergencyContact">
 
-                        </div>
-                    </div>    
+                           </div>
+
+                     </div>
+                  </div>    
                </div>
             </div>
             <!-- Treasurer -->
             <div class="member-card">
-               <div class="member-header">
+               <div class="member-header" (click)="toggleSection('treasurer')" [attr.aria-expanded]="isOpen.treasurer">
                   <div class="member-avatar">
-                     👨‍💼
+                     💰
                   </div>
                   <div>
                      <h3>Treasurer</h3>
                      <small>Finance</small>
                   </div>
+                  <span class="member-toggle">{{ isOpen.treasurer ? '−' : '+' }}</span>
                </div>
-               <div class="form-grid">
+               <div class="form-grid" *ngIf="isOpen.treasurer">
                   <div class="form-group">
                      <label>Full Name</label>
                      <input
@@ -1199,7 +1196,9 @@
                      <label>Mobile</label>
                      <input
                         type="text"
-                        formControlName="treasurerMobile">
+                        formControlName="treasurerMobile"
+                        maxlength="10"
+                        appNumbersOnly>
                   </div>
                   <div class="form-group">
                      <label>Email</label>
@@ -1211,7 +1210,9 @@
                      <label>WhatsApp</label>
                      <input
                         type="text"
-                        formControlName="treasurerWhatsapp">
+                        formControlName="treasurerWhatsapp"
+                        maxlength="10"
+                        appNumbersOnly>
                   </div>
                     <div class="document-box">
                         <h4>📄 Treasurer Documents</h4>
@@ -1288,17 +1289,18 @@
             <!-- Manager -->
             <div class="member-card">
 
-                <div class="member-header">
-                    <div class="member-avatar">👨‍💼</div>
+                <div class="member-header" (click)="toggleSection('manager')" [attr.aria-expanded]="isOpen.manager">
+                    <div class="member-avatar">📋</div>
 
                     <div>
                         <h3>Society Manager</h3>
                         <small>Operations</small>
                     </div>
+                    <span class="member-toggle">{{ isOpen.manager ? '−' : '+' }}</span>
 
                 </div>
 
-                <div class="form-grid">
+                <div class="form-grid" *ngIf="isOpen.manager">
 
                     <div class="form-group">
                         <label>Full Name</label>
@@ -1311,7 +1313,9 @@
                         <label>Mobile</label>
                         <input
                             type="text"
-                            formControlName="managerMobile">
+                            formControlName="managerMobile"
+                            maxlength="10"
+                            appNumbersOnly>
                     </div>
 
                     <div class="form-group">
@@ -1354,17 +1358,18 @@
             <!-- Accountant -->
             <div class="member-card">
 
-                <div class="member-header">
-                    <div class="member-avatar">💰</div>
+                <div class="member-header" (click)="toggleSection('accountant')" [attr.aria-expanded]="isOpen.accountant">
+                    <div class="member-avatar">🧾</div>
 
                     <div>
                         <h3>Accountant</h3>
                         <small>Finance</small>
                     </div>
+                    <span class="member-toggle">{{ isOpen.accountant ? '−' : '+' }}</span>
 
                 </div>
 
-                <div class="form-grid">
+                <div class="form-grid" *ngIf="isOpen.accountant">
 
                     <div class="form-group">
                         <label>Full Name</label>
@@ -1377,7 +1382,9 @@
                         <label>Mobile</label>
                         <input
                             type="text"
-                            formControlName="accountantMobile">
+                            formControlName="accountantMobile"
+                            maxlength="10"
+                            appNumbersOnly>
                     </div>
 
                     <div class="form-group">
@@ -1430,6 +1437,16 @@
 
                 <table class="staff-table">
 
+                    <colgroup>
+                        <col style="width: 14%">
+                        <col style="width: 18%">
+                        <col style="width: 18%">
+                        <col style="width: 18%">
+                        <col style="width: 10.66%">
+                        <col style="width: 10.66%">
+                        <col style="width: 10.66%">
+                    </colgroup>
+
                     <thead>
                     <tr>
                         <th>Role</th>
@@ -1457,7 +1474,9 @@
 
                             <td>
                                 <input class="staff-input"
-                                formControlName="watchmanMobile">
+                                formControlName="watchmanMobile"
+                                maxlength="10"
+                                appNumbersOnly>
                             </td>
 
 
@@ -1509,7 +1528,9 @@
 
                             <td>
                                 <input class="staff-input"
-                                formControlName="cleanerMobile">
+                                formControlName="cleanerMobile"
+                                maxlength="10"
+                                appNumbersOnly>
                             </td>
 
 
@@ -1561,6 +1582,8 @@
 
                             <td>
                                 <input class="staff-input"
+                                maxlength="10"
+                                appNumbersOnly
                                 formControlName="electricianMobile">
                             </td>
 
@@ -1613,7 +1636,9 @@
 
                             <td>
                                 <input class="staff-input"
-                                formControlName="gardenerMobile">
+                                formControlName="gardenerMobile"
+                                maxlength="10"
+                                appNumbersOnly>
                             </td>
 
 
@@ -1665,7 +1690,9 @@
 
                             <td>
                                 <input class="staff-input"
-                                formControlName="liftOperatorMobile">
+                                formControlName="liftOperatorMobile"
+                                maxlength="10"
+                                appNumbersOnly>
                             </td>
 
 
@@ -1717,7 +1744,9 @@
 
                             <td>
                                 <input class="staff-input"
-                                formControlName="plumberMobile">
+                                formControlName="plumberMobile"
+                                maxlength="10"
+                                appNumbersOnly>
                             </td>
 
 
@@ -1769,115 +1798,1054 @@
          STEP 4 - REVIEW
          ==========================================================-->
       <div class="glass-card" *ngIf="currentStep==4">
-         <h2>📋 Review & Create Society</h2>
+         <h2>📋 Review Information</h2>
          <p class="section-subtitle">
             Verify all information before creating the society.
          </p>
          <!-- Society -->
+         <!--=========================================================
+         REVIEW - SOCIETY INFORMATION
+         ==========================================================-->
          <div class="review-section">
             <h3>🏢 Society Information</h3>
+
             <div class="review-grid">
+
                <div class="review-item">
                   <span>Society Name</span>
                   <strong>{{ societyForm.value.societyName }}</strong>
                </div>
+
                <div class="review-item">
-                  <span>Registration No.</span>
+                  <span>Registration Number</span>
                   <strong>{{ societyForm.value.registrationNo }}</strong>
                </div>
+
+               <div class="review-item">
+                  <span>Registration Date</span>
+                  <strong>{{ societyForm.value.registrationDate }}</strong>
+               </div>
+
                <div class="review-item">
                   <span>Society Type</span>
                   <strong>{{ societyForm.value.societyType }}</strong>
                </div>
+
                <div class="review-item">
-                  <span>City</span>
-                  <strong>{{ societyForm.value.city }}</strong>
+                  <span>Construction Year</span>
+                  <strong>{{ societyForm.value.constructionYear }}</strong>
                </div>
+
                <div class="review-item">
-                  <span>State</span>
-                  <strong>{{ societyForm.value.state }}</strong>
+                  <span>Builder Name</span>
+                  <strong>{{ societyForm.value.builder }}</strong>
                </div>
+
+               <div class="review-item">
+                  <span>Email</span>
+                  <strong>{{ societyForm.value.email }}</strong>
+               </div>
+
                <div class="review-item">
                   <span>WhatsApp</span>
                   <strong>{{ societyForm.value.whatsapp }}</strong>
                </div>
+
+               <div class="review-item review-full">
+                  <span>Description</span>
+                  <strong>{{ societyForm.value.description }}</strong>
+               </div>
+
             </div>
          </div>
-         <!-- Building -->
+
+         <!--=========================================================
+         DOCUMENTS
+         ==========================================================-->
+
          <div class="review-section">
-            <h3>🏙 Building Configuration</h3>
+
+            <h3>📑 Society Documents</h3>
+
             <div class="review-grid">
+
                <div class="review-item">
-                  <span>Wings</span>
+                  <span>GST Number</span>
+                  <strong>{{ societyForm.value.gstNumber }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Society PAN</span>
+                  <strong>{{ societyForm.value.societyPan }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>RERA Number</span>
+                  <strong>{{ societyForm.value.reraNumber }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Logo</span>
+                  <strong>{{ societyLogo ? 'Uploaded' : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Registration Certificate</span>
+                  <strong>{{ registrationCertificate ? 'Uploaded' : 'Not Uploaded' }}</strong>
+               </div>
+
+            </div>
+
+         </div>
+
+         <!--=========================================================
+         ADDRESS
+         ==========================================================-->
+
+         <div class="review-section">
+
+            <h3>📍 Address</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item review-full">
+                  <span>Address Line 1</span>
+                  <strong>{{ societyForm.value.address1 }}</strong>
+               </div>
+
+               <div class="review-item review-full">
+                  <span>Address Line 2</span>
+                  <strong>{{ societyForm.value.address2 }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Area</span>
+                  <strong>{{ societyForm.value.area }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>City</span>
+                  <strong>{{ societyForm.value.city }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>State</span>
+                  <strong>{{ societyForm.value.state }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Pincode</span>
+                  <strong>{{ societyForm.value.pincode }}</strong>
+               </div>
+
+            </div>
+
+         </div>
+
+         <!--=========================================================
+         BANK
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🏦 Bank Details</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item">
+         <span>Bank Name</span>
+         <strong>{{ societyForm.value.bankName }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Branch</span>
+         <strong>{{ societyForm.value.bankBranch }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Account Number</span>
+         <strong>{{ societyForm.value.accountNumber }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>IFSC Code</span>
+         <strong>{{ societyForm.value.ifscCode }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>UPI ID</span>
+         <strong>{{ societyForm.value.upiId }}</strong>
+         </div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         BUILDING
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🏙 Building Configuration</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item">
+         <span>Total Wings</span>
+         <strong>{{ societyForm.value.wings }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Wing Pattern</span>
+         <strong>{{ societyForm.value.wingPattern }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Residential Start Floor</span>
+         <strong>{{ societyForm.value.residentialStartFloor }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Residential Floors</span>
+         <strong>{{ societyForm.value.floors }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Flats Per Floor</span>
+         <strong>{{ societyForm.value.flats }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Flat Pattern</span>
+         <strong>{{ societyForm.value.flatPattern }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Lift Available</span>
+         <strong>{{ societyForm.value.liftAvailable }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Lifts Per Wing</span>
+         <strong>{{ societyForm.value.liftCount }}</strong>
+         </div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         GROUND FLOOR
+         ==========================================================-->
+         <div class="review-section">
+            <h3>🏪 Ground Floor</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Ground Shops Available</span>
+                  <strong>{{ societyForm.value.groundShopAvailable }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.groundShopAvailable=='Yes'">
+                  <span>No. of Shops</span>
+                  <strong>{{ societyForm.value.groundShopCount }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.groundShopAvailable=='Yes'">
+                  <span>Shop Prefix</span>
+                  <strong>{{ societyForm.value.groundShopPrefix }}</strong>
+               </div>
+
+            </div>
+         </div>
+
+         <!--=========================================================
+         COMMERCIAL AREA
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🏬 Commercial Area</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item">
+         <span>Commercial Available</span>
+         <strong>{{ societyForm.value.commercialAvailable }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.commercialAvailable=='Yes'">
+         <span>Start Floor</span>
+         <strong>{{ societyForm.value.commercialStartFloor }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.commercialAvailable=='Yes'">
+         <span>Commercial Floors</span>
+         <strong>{{ societyForm.value.commercialFloors }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.commercialAvailable=='Yes'">
+         <span>Shops / Floor</span>
+         <strong>{{ societyForm.value.commercialShopsPerFloor }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.commercialAvailable=='Yes'">
+         <span>Office Units / Floor</span>
+         <strong>{{ societyForm.value.commercialOfficePerFloor }}</strong>
+         </div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         BASEMENT
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🚗 Basement</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item">
+         <span>Basement Available</span>
+         <strong>{{ societyForm.value.basementAvailable }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.basementAvailable=='Yes'">
+         <span>Basement Floors</span>
+         <strong>{{ societyForm.value.basementFloors }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.basementAvailable=='Yes'">
+         <span>Parking / Basement</span>
+         <strong>{{ societyForm.value.parkingPerBasement }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.basementAvailable=='Yes'">
+         <span>Storage Rooms</span>
+         <strong>{{ societyForm.value.storageRooms }}</strong>
+         </div>
+
+         <div class="review-item" *ngIf="societyForm.value.basementAvailable=='Yes'">
+         <span>Utility Rooms</span>
+         <strong>{{ societyForm.value.utilityRooms }}</strong>
+         </div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         PARKING
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🚘 Parking Configuration</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item">
+         <span>Resident Parking</span>
+         <strong>{{ societyForm.value.residentParking }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Visitor Parking</span>
+         <strong>{{ societyForm.value.visitorParking }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Two Wheeler Parking</span>
+         <strong>{{ societyForm.value.twoWheelerParking }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Four Wheeler Parking</span>
+         <strong>{{ societyForm.value.fourWheelerParking }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>EV Charging</span>
+         <strong>{{ societyForm.value.evParking }}</strong>
+         </div>
+
+         <div class="review-item">
+         <span>Disabled Parking</span>
+         <strong>{{ societyForm.value.disabledParking }}</strong>
+         </div>
+
+         <div class="review-item review-full">
+         <span>Parking Allocation</span>
+         <strong>{{ societyForm.value.parkingAllocation }}</strong>
+         </div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         AMENITIES
+         ==========================================================-->
+
+         <div class="review-section">
+
+         <h3>🎯 Amenities</h3>
+
+         <div class="review-grid">
+
+         <div class="review-item"><span>Security Cabin</span><strong>{{ societyForm.value.securityCabin ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Reception</span><strong>{{ societyForm.value.reception ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Intercom</span><strong>{{ societyForm.value.intercom ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Gas Pipeline</span><strong>{{ societyForm.value.gasPipeline ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Solar System</span><strong>{{ societyForm.value.solar ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Rain Water Harvesting</span><strong>{{ societyForm.value.rainWaterHarvesting ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>CCTV</span><strong>{{ societyForm.value.cctv ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Visitor Management</span><strong>{{ societyForm.value.visitorManagement ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Society Office</span><strong>{{ societyForm.value.societyOffice ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Garbage Collection</span><strong>{{ societyForm.value.garbageCollection ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>RO Plant</span><strong>{{ societyForm.value.roPlant ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Garden</span><strong>{{ societyForm.value.garden ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Gym</span><strong>{{ societyForm.value.gym ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Club House</span><strong>{{ societyForm.value.clubHouse ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Swimming Pool</span><strong>{{ societyForm.value.swimmingPool ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Community Hall</span><strong>{{ societyForm.value.communityHall ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Children's Play Area</span><strong>{{ societyForm.value.childrenPlayArea ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Library</span><strong>{{ societyForm.value.library ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Temple</span><strong>{{ societyForm.value.temple ? 'Yes' : 'No' }}</strong></div>
+
+         <div class="review-item"><span>Fire Safety</span><strong>{{ societyForm.value.fireSafety ? 'Yes' : 'No' }}</strong></div>
+
+         </div>
+
+         </div>
+
+         <!--=========================================================
+         LIFT DETAILS
+         ==========================================================-->
+         <div class="review-section">
+            <h3>🛗 Lift Details</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Passenger Lifts</span>
+                  <strong>{{ societyForm.value.passengerLift }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Service Lifts</span>
+                  <strong>{{ societyForm.value.serviceLift }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Lift Company</span>
+                  <strong>{{ societyForm.value.liftCompany }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>AMC Expiry</span>
+                  <strong>{{ societyForm.value.liftAmcDate }}</strong>
+               </div>
+
+            </div>
+         </div>
+
+         <!--=========================================================
+         WATER TANK
+         ==========================================================-->
+         <div class="review-section">
+            <h3>💧 Water Tank</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Underground Tank</span>
+                  <strong>{{ societyForm.value.undergroundTank }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Overhead Tank</span>
+                  <strong>{{ societyForm.value.overheadTank }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Total Capacity</span>
+                  <strong>{{ societyForm.value.waterTankCapacity }} Litres</strong>
+               </div>
+
+            </div>
+         </div>
+
+         <!--=========================================================
+         DG BACKUP
+         ==========================================================-->
+         <div class="review-section">
+            <h3>⚡ DG Backup</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Generator Available</span>
+                  <strong>{{ societyForm.value.generatorAvailable }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.generatorAvailable=='Yes'">
+                  <span>Capacity</span>
+                  <strong>{{ societyForm.value.generatorCapacity }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.generatorAvailable=='Yes'">
+                  <span>Vendor</span>
+                  <strong>{{ societyForm.value.generatorVendor }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.generatorAvailable=='Yes'">
+                  <span>Fuel Type</span>
+                  <strong>{{ societyForm.value.generatorFuel }}</strong>
+               </div>
+
+               <div class="review-item" *ngIf="societyForm.value.generatorAvailable=='Yes'">
+                  <span>AMC Expiry</span>
+                  <strong>{{ societyForm.value.generatorAmcDate }}</strong>
+               </div>
+
+            </div>
+         </div>
+
+         <!--=========================================================
+         FIRE SAFETY
+         ==========================================================-->
+         <div class="review-section">
+            <h3>🔥 Fire Safety System</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Fire System</span>
+                  <strong>{{ societyForm.value.fireSystemAvailable }}</strong>
+               </div>
+
+               <div class="review-item"><span>Fire Pump</span><strong>{{ societyForm.value.firePump }}</strong></div>
+               <div class="review-item"><span>Tank Capacity</span><strong>{{ societyForm.value.fireTankCapacity }}</strong></div>
+               <div class="review-item"><span>Hydrant</span><strong>{{ societyForm.value.hydrantSystem }}</strong></div>
+               <div class="review-item"><span>Sprinkler</span><strong>{{ societyForm.value.sprinklerSystem }}</strong></div>
+               <div class="review-item"><span>Smoke Detector</span><strong>{{ societyForm.value.smokeDetectors }}</strong></div>
+               <div class="review-item"><span>Vendor</span><strong>{{ societyForm.value.fireVendor }}</strong></div>
+               <div class="review-item"><span>AMC Expiry</span><strong>{{ societyForm.value.fireAmcDate }}</strong></div>
+
+            </div>
+         </div>
+
+         <!--=========================================================
+         COMMITTEE MEMBERS
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>👥 Committee Members</h3>
+
+            <!-- Chairman -->
+            <div class="review-subsection">
+
+               <h4>👔 Chairman</h4>
+
+               <div class="review-grid">
+
+                  <div class="review-item">
+                     <span>Name</span>
+                     <strong>{{ societyForm.value.chairmanName }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Wing</span>
+                     <strong>{{ societyForm.value.chairmanWing }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Flat</span>
+                     <strong>{{ societyForm.value.chairmanFlat }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Mobile</span>
+                     <strong>{{ societyForm.value.chairmanMobile }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Email</span>
+                     <strong>{{ societyForm.value.chairmanEmail }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>WhatsApp</span>
+                     <strong>{{ societyForm.value.chairmanWhatsapp }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Start Date</span>
+                     <strong>{{ societyForm.value.chairmanStartDate }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>End Date</span>
+                     <strong>{{ societyForm.value.chairmanEndDate }}</strong>
+                  </div>
+
+                  <div class="review-item review-full">
+                     <span>Emergency Contact</span>
+                     <strong>{{ societyForm.value.chairmanEmergencyContact }}</strong>
+                  </div>
+
+               </div>
+
+            </div>
+
+            <hr>
+
+            <!-- Secretary -->
+            <div class="review-subsection">
+
+               <h4>📝 Secretary</h4>
+
+               <div class="review-grid">
+
+                  <div class="review-item">
+                     <span>Name</span>
+                     <strong>{{ societyForm.value.secretaryName }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Wing</span>
+                     <strong>{{ societyForm.value.secretaryWing }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Flat</span>
+                     <strong>{{ societyForm.value.secretaryFlat }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Mobile</span>
+                     <strong>{{ societyForm.value.secretaryMobile }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Email</span>
+                     <strong>{{ societyForm.value.secretaryEmail }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>WhatsApp</span>
+                     <strong>{{ societyForm.value.secretaryWhatsapp }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Start Date</span>
+                     <strong>{{ societyForm.value.secretaryStartDate }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>End Date</span>
+                     <strong>{{ societyForm.value.secretaryEndDate }}</strong>
+                  </div>
+
+                  <div class="review-item review-full">
+                     <span>Emergency Contact</span>
+                     <strong>{{ societyForm.value.secretaryEmergencyContact }}</strong>
+                  </div>
+
+               </div>
+
+            </div>
+
+            <hr>
+
+            <!-- Treasurer -->
+            <div class="review-subsection">
+
+               <h4>💰 Treasurer</h4>
+
+               <div class="review-grid">
+
+                  <div class="review-item">
+                     <span>Name</span>
+                     <strong>{{ societyForm.value.treasurerName }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Wing</span>
+                     <strong>{{ societyForm.value.treasurerWing }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Flat</span>
+                     <strong>{{ societyForm.value.treasurerFlat }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Mobile</span>
+                     <strong>{{ societyForm.value.treasurerMobile }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Email</span>
+                     <strong>{{ societyForm.value.treasurerEmail }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>WhatsApp</span>
+                     <strong>{{ societyForm.value.treasurerWhatsapp }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>Start Date</span>
+                     <strong>{{ societyForm.value.treasurerStartDate }}</strong>
+                  </div>
+
+                  <div class="review-item">
+                     <span>End Date</span>
+                     <strong>{{ societyForm.value.treasurerEndDate }}</strong>
+                  </div>
+
+                  <div class="review-item review-full">
+                     <span>Emergency Contact</span>
+                     <strong>{{ societyForm.value.treasurerEmergencyContact }}</strong>
+                  </div>
+
+               </div>
+
+            </div>
+
+         </div>
+
+         <!--=========================================================
+         OFFICE STAFF
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>🏢 Office Staff</h3>
+
+            <div class="review-grid office-staff-grid">
+
+               <div class="review-item">
+                  <span>Manager Name</span>
+                  <strong>{{ societyForm.value.managerName }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Manager Mobile</span>
+                  <strong>{{ societyForm.value.managerMobile }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Manager Email</span>
+                  <strong>{{ societyForm.value.managerEmail }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Accountant Name</span>
+                  <strong>{{ societyForm.value.accountantName }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Accountant Mobile</span>
+                  <strong>{{ societyForm.value.accountantMobile }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Accountant Email</span>
+                  <strong>{{ societyForm.value.accountantEmail }}</strong>
+               </div>
+
+            </div>
+
+         </div>
+
+         <!--=========================================================
+         SOCIETY STAFF
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>👷 Society Staff</h3>
+
+            <table class="review-table">
+
+               <thead>
+                  <tr>
+                     <th>Role</th>
+                     <th>Name</th>
+                     <th>Mobile</th>
+                     <th>Joining Date</th>
+                  </tr>
+               </thead>
+
+               <tbody>
+
+                  <tr *ngIf="societyForm.value.watchmanName">
+                     <td>🛡️ Watchman</td>
+                     <td>{{ societyForm.value.watchmanName }}</td>
+                     <td>{{ societyForm.value.watchmanMobile }}</td>
+                     <td>{{ societyForm.value.watchmanJoiningDate }}</td>
+                  </tr>
+
+                  <tr *ngIf="societyForm.value.cleanerName">
+                     <td>🧹 Cleaner</td>
+                     <td>{{ societyForm.value.cleanerName }}</td>
+                     <td>{{ societyForm.value.cleanerMobile }}</td>
+                     <td>{{ societyForm.value.cleanerJoiningDate }}</td>
+                  </tr>
+
+                  <tr *ngIf="societyForm.value.electricianName">
+                     <td>⚡ Electrician</td>
+                     <td>{{ societyForm.value.electricianName }}</td>
+                     <td>{{ societyForm.value.electricianMobile }}</td>
+                     <td>{{ societyForm.value.electricianJoiningDate }}</td>
+                  </tr>
+
+                  <tr *ngIf="societyForm.value.gardenerName">
+                     <td>🌳 Gardener</td>
+                     <td>{{ societyForm.value.gardenerName }}</td>
+                     <td>{{ societyForm.value.gardenerMobile }}</td>
+                     <td>{{ societyForm.value.gardenerJoiningDate }}</td>
+                  </tr>
+
+                  <tr *ngIf="societyForm.value.liftOperatorName">
+                     <td>🛗 Lift Operator</td>
+                     <td>{{ societyForm.value.liftOperatorName }}</td>
+                     <td>{{ societyForm.value.liftOperatorMobile }}</td>
+                     <td>{{ societyForm.value.liftOperatorJoiningDate }}</td>
+                  </tr>
+
+                  <tr *ngIf="societyForm.value.plumberName">
+                     <td>🚰 Plumber</td>
+                     <td>{{ societyForm.value.plumberName }}</td>
+                     <td>{{ societyForm.value.plumberMobile }}</td>
+                     <td>{{ societyForm.value.plumberJoiningDate }}</td>
+                  </tr>
+
+               </tbody>
+
+            </table>
+
+         </div>
+
+         <!--=========================================================
+         DOCUMENTS REVIEW
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>📂 Uploaded Documents</h3>
+
+            <div class="review-grid">
+
+               <!-- Society Documents -->
+
+               <div class="review-item">
+                  <span>Society Logo</span>
+                  <strong>{{ societyLogo ? societyLogo.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Registration Certificate</span>
+                  <strong>{{ registrationCertificate ? registrationCertificate.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <!-- Chairman -->
+
+               <div class="review-item">
+                  <span>Chairman Photo</span>
+                  <strong>{{ chairmanPhoto ? chairmanPhoto.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Chairman Aadhaar</span>
+                  <strong>{{ chairmanAadhar ? chairmanAadhar.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Chairman PAN</span>
+                  <strong>{{ chairmanPan ? chairmanPan.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <!-- Secretary -->
+
+               <div class="review-item">
+                  <span>Secretary Photo</span>
+                  <strong>{{ societyForm.value.secretaryPhoto ? societyForm.value.secretaryPhoto.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Secretary Aadhaar</span>
+                  <strong>{{ societyForm.value.secretaryAadhar ? societyForm.value.secretaryAadhar.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Secretary PAN</span>
+                  <strong>{{ societyForm.value.secretaryPan ? societyForm.value.secretaryPan.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <!-- Treasurer -->
+
+               <div class="review-item">
+                  <span>Treasurer Photo</span>
+                  <strong>{{ societyForm.value.treasurerPhoto ? societyForm.value.treasurerPhoto.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Treasurer Aadhaar</span>
+                  <strong>{{ societyForm.value.treasurerAadhar ? societyForm.value.treasurerAadhar.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Treasurer PAN</span>
+                  <strong>{{ societyForm.value.treasurerPan ? societyForm.value.treasurerPan.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <!-- Manager -->
+
+               <div class="review-item">
+                  <span>Manager Photo</span>
+                  <strong>{{ societyForm.value.managerPhoto ? societyForm.value.managerPhoto.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Manager Aadhaar</span>
+                  <strong>{{ societyForm.value.managerAadhar ? societyForm.value.managerAadhar.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Manager PAN</span>
+                  <strong>{{ societyForm.value.managerPan ? societyForm.value.managerPan.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <!-- Accountant -->
+
+               <div class="review-item">
+                  <span>Accountant Photo</span>
+                  <strong>{{ societyForm.value.accountantPhoto ? societyForm.value.accountantPhoto.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Accountant Aadhaar</span>
+                  <strong>{{ societyForm.value.accountantAadhar ? societyForm.value.accountantAadhar.name : 'Not Uploaded' }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Accountant PAN</span>
+                  <strong>{{ societyForm.value.accountantPan ? societyForm.value.      accountantPan.name : 'Not Uploaded' }}</strong>
+               </div>
+
+            </div>
+
+         </div>
+
+         <!--=========================================================
+         FINAL SUMMARY
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>📊 Final Summary</h3>
+
+            <div class="review-grid">
+
+               <div class="review-item">
+                  <span>Society Name</span>
+                  <strong>{{ societyForm.value.societyName }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>City</span>
+                  <strong>{{ societyForm.value.city }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>State</span>
+                  <strong>{{ societyForm.value.state }}</strong>
+               </div>
+
+               <div class="review-item">
+                  <span>Total Wings</span>
                   <strong>{{ societyForm.value.wings }}</strong>
                </div>
+
                <div class="review-item">
                   <span>Residential Floors</span>
                   <strong>{{ societyForm.value.floors }}</strong>
                </div>
+
                <div class="review-item">
-                  <span>Flats Per Floor</span>
+                  <span>Flats / Floor</span>
                   <strong>{{ societyForm.value.flats }}</strong>
                </div>
-               <div class="review-item">
-                  <span>Commercial Floors</span>
-                  <strong>{{ societyForm.value.commercialFloors }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>Basement Floors</span>
-                  <strong>{{ societyForm.value.basementFloors }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>Lifts / Wing</span>
-                  <strong>{{ societyForm.value.liftCount }}</strong>
-               </div>
-            </div>
-         </div>
-         <!-- Parking -->
-         <div class="review-section">
-            <h3>🚘 Parking Summary</h3>
-            <div class="review-grid">
-               <div class="review-item">
-                  <span>Resident Parking</span>
-                  <strong>{{ societyForm.value.residentParking }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>Visitor Parking</span>
-                  <strong>{{ societyForm.value.visitorParking }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>Two Wheeler</span>
-                  <strong>{{ societyForm.value.twoWheelerParking }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>Four Wheeler</span>
-                  <strong>{{ societyForm.value.fourWheelerParking }}</strong>
-               </div>
-               <div class="review-item">
-                  <span>EV Charging</span>
-                  <strong>{{ societyForm.value.evParking }}</strong>
-               </div>
-            </div>
-         </div>
-         <!-- Committee -->
-         <div class="review-section">
-            <h3>👥 Committee</h3>
-            <div class="review-grid">
+
                <div class="review-item">
                   <span>Chairman</span>
                   <strong>{{ societyForm.value.chairmanName }}</strong>
                </div>
+
                <div class="review-item">
                   <span>Secretary</span>
                   <strong>{{ societyForm.value.secretaryName }}</strong>
                </div>
+
                <div class="review-item">
                   <span>Treasurer</span>
                   <strong>{{ societyForm.value.treasurerName }}</strong>
                </div>
+
             </div>
+
          </div>
+
+         <!--=========================================================
+         DECLARATION
+         ==========================================================-->
+         <div class="review-section">
+
+            <h3>✅ Declaration</h3>
+
+            <div class="declaration-box">
+
+               <label class="checkbox-label">
+
+                  <input
+                     type="checkbox"
+                     formControlName="acceptDeclaration">
+
+                  <span>
+                     I hereby confirm that all the information provided above is true and correct to the best of my knowledge. I understand that incorrect information may affect society registration and future operations.
+                  </span>
+
+               </label>
+
+            </div>
+
+         </div>
+
       </div>
+
       <!--=========================================================
          FOOTER BUTTONS
          ==========================================================-->
@@ -1900,8 +2868,9 @@
          type="button"
          class="btn-success"
          *ngIf="currentStep==4"
+         [disabled]="isSubmitting"
          (click)="submit()">
-         🚀 Create Society
+         {{ isSubmitting ? 'Creating Society...' : '🚀 Create Society' }}
          </button>
       </div>
    </form>

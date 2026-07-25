@@ -13,7 +13,9 @@
       placeholder="Enter your mobile number"
       class="form-input"
       maxlength="10"
+      pattern="[0-9]*"
       [disabled]="isLoading()"
+      appNumbersOnly
     />
 
     <small *ngIf="!otpSent">
@@ -37,6 +39,7 @@
       placeholder="Enter 6 digit OTP"
       class="form-input"
       maxlength="6"
+      appNumbersOnly
       [disabled]="isLoadingVO()"
     />
 

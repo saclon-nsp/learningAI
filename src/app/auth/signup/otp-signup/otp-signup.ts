@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { SuccessPopup } from '../../../shared/components/success-popup/success-popup';
 import { PopupService } from '../../../shared/services/popup';
+import { NumbersOnly } from '../../../shared/directives/numbers-only';
 
 @Component({
   selector: 'app-otp-signup',
@@ -12,7 +13,8 @@ import { PopupService } from '../../../shared/services/popup';
   imports: [
     CommonModule,
     FormsModule,
-    SuccessPopup
+    SuccessPopup,
+    NumbersOnly
   ],
   templateUrl: './otp-signup.html',
   styleUrl: './otp-signup.css'

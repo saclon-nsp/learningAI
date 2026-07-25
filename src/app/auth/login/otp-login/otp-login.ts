@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { SuccessPopup } from '../../../shared/components/success-popup/success-popup';
 import { PopupService } from '../../../shared/services/popup';
+import { NumbersOnly } from '../../../shared/directives/numbers-only';
 
 @Component({
   selector: 'app-otp-login',
@@ -12,7 +13,8 @@ import { PopupService } from '../../../shared/services/popup';
   imports: [
     CommonModule,
     FormsModule,
-    SuccessPopup
+    SuccessPopup,
+    NumbersOnly
   ],
   templateUrl: './otp-login.html',
   styleUrl: './otp-login.css'
@@ -41,6 +43,15 @@ export class OtpLogin {
     private authService: AuthService,
     public popupService: PopupService
   ) {}
+
+  allowOnlyNumbers(event: KeyboardEvent): void {
+    const charCode = event.which ? event.which : event.keyCode;
+
+    // Allow only numbers (0-9)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
 
   sendOtp(): void {
 

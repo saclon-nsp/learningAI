@@ -6,13 +6,16 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { NumbersOnly } from '../../../shared/directives/numbers-only';
+import { SocietyService } from '../../../services/society.service';
 
 @Component({
   selector: 'app-create-society',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NumbersOnly
   ],
   templateUrl: './create-society.html',
   styleUrl: './create-society.css'
@@ -24,6 +27,8 @@ export class CreateSociety {
   totalSteps = 4;
 
   societyForm: FormGroup;
+
+  isSubmitting = false;
 
   chairmanPhoto: File | null = null;
   chairmanAadhar: File | null = null;
@@ -55,6 +60,16 @@ export class CreateSociety {
     dgBackup: false,
 
     fireSystem: false,
+
+    chairman: true,
+
+    secretary: false,
+
+    treasurer: false,
+
+    manager: false,
+
+    accountant: false,
   };
 
   // Upload Files
@@ -63,7 +78,10 @@ export class CreateSociety {
 
   societyLogo: File | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private societyService: SocietyService
+  ) {
 
 
     this.societyForm = this.fb.group({
@@ -76,21 +94,21 @@ export class CreateSociety {
 
       societyName: ['', Validators.required],
 
-      registrationNo: [''],
+      registrationNo: ['', Validators.required],
 
-      registrationDate: [''],
+      registrationDate: ['', Validators.required],
 
       reraNumber: [''],
 
-      societyType: ['Residential'],
+      societyType: ['Residential', Validators.required],
 
-      constructionYear: [''],
+      constructionYear: ['', Validators.required],
 
       builder: [''],
 
-      email: ['', [Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
 
-      whatsapp: ['', Validators.required],
+      whatsapp: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
       landline: [''],
 
@@ -105,7 +123,7 @@ export class CreateSociety {
       // Address
       // ===========================================
 
-      address1: [''],
+      address1: ['', Validators.required],
 
       address2: [''],
 
@@ -115,7 +133,7 @@ export class CreateSociety {
 
       state: ['', Validators.required],
 
-      pincode: ['', Validators.required],
+      pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
 
       // ==========================
       // Bank Details
@@ -131,13 +149,13 @@ export class CreateSociety {
       // Building Information
       // ===========================================
 
-      wings: [1],
+      wings: [1, [Validators.required, Validators.min(1)]],
 
-      buildingName: [''],
+      buildingName: ['', Validators.required],
 
-      buildingType: ['Residential'],
+      buildingType: ['Residential', Validators.required],
 
-      totalBuildings: [1],
+      totalBuildings: [1, [Validators.required, Validators.min(1)]],
 
       // ===========================================
       // Ground Floor
@@ -181,13 +199,13 @@ export class CreateSociety {
       // Residential Floors
       // ===========================================
 
-      residentialStartFloor: [1],
+      residentialStartFloor: [1, [Validators.required, Validators.min(1)]],
 
-      floors: [1],
+      floors: [1, [Validators.required, Validators.min(1)]],
 
-      flats: [4],
+      flats: [4, [Validators.required, Validators.min(1)]],
 
-      flatPattern: ['101'],
+      flatPattern: ['101', Validators.required],
 
       liftAvailable: ['No'],
 
@@ -280,15 +298,15 @@ export class CreateSociety {
       // Chairman
       // ===========================================
 
-      chairmanName: [''],
+      chairmanName: ['', Validators.required],
 
-      chairmanWing: [''],
+      chairmanWing: ['', Validators.required],
 
-      chairmanFlat: [''],
+      chairmanFlat: ['', Validators.required],
 
-      chairmanMobile: [''],
+      chairmanMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
-      chairmanEmail: ['', Validators.email],
+      chairmanEmail: ['', [Validators.required, Validators.email]],
 
       chairmanWhatsapp: [''],
 
@@ -296,7 +314,7 @@ export class CreateSociety {
       chairmanAadhar: [null],
       chairmanPan: [null],
 
-      chairmanStartDate: [''],
+      chairmanStartDate: ['', Validators.required],
       chairmanEndDate: [''],
       chairmanEmergencyContact: [''],
 
@@ -304,15 +322,15 @@ export class CreateSociety {
       // Secretary
       // ===========================================
 
-      secretaryName: [''],
+      secretaryName: ['', Validators.required],
 
-      secretaryWing: [''],
+      secretaryWing: ['', Validators.required],
 
-      secretaryFlat: [''],
+      secretaryFlat: ['', Validators.required],
 
-      secretaryMobile: [''],
+      secretaryMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
-      secretaryEmail: ['', Validators.email],
+      secretaryEmail: ['', [Validators.required, Validators.email]],
 
       secretaryWhatsapp: [''],
 
@@ -320,7 +338,7 @@ export class CreateSociety {
       secretaryAadhar:[null],
       secretaryPan:[null],
 
-      secretaryStartDate:[''],
+      secretaryStartDate:['', Validators.required],
       secretaryEndDate:[''],
       secretaryEmergencyContact:[''],
 
@@ -328,15 +346,15 @@ export class CreateSociety {
       // Treasurer
       // ===========================================
 
-      treasurerName: [''],
+      treasurerName: ['', Validators.required],
 
-      treasurerWing: [''],
+      treasurerWing: ['', Validators.required],
 
-      treasurerFlat: [''],
+      treasurerFlat: ['', Validators.required],
 
-      treasurerMobile: [''],
+      treasurerMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
 
-      treasurerEmail: ['', Validators.email],
+      treasurerEmail: ['', [Validators.required, Validators.email]],
 
       treasurerWhatsapp: [''],
 
@@ -344,7 +362,7 @@ export class CreateSociety {
       treasurerAadhar:[null],
       treasurerPan:[null],
 
-      treasurerStartDate:[''],
+      treasurerStartDate:['', Validators.required],
       treasurerEndDate:[''],
       treasurerEmergencyContact:[''],
 
@@ -422,6 +440,8 @@ export class CreateSociety {
       plumberPhoto: [null],
       plumberAadhar: [null],
       plumberPan: [null],
+
+      acceptDeclaration: [false, Validators.requiredTrue],
     });
     
 
@@ -513,6 +533,11 @@ export class CreateSociety {
 
     if (this.currentStep < this.totalSteps) {
 
+      if (!this.isStepValid(this.currentStep)) {
+        this.showStepValidationError();
+        return;
+      }
+
       this.currentStep++;
 
       window.scrollTo({
@@ -545,35 +570,44 @@ export class CreateSociety {
 
   submit(): void {
 
-    if (this.societyForm.invalid) {
-
-      this.societyForm.markAllAsTouched();
-
-      alert('Please complete all mandatory fields.');
-
+    if (![1, 2, 3, 4].every(step => this.isStepValid(step))) {
+      this.showStepValidationError();
       return;
-
     }
 
-    const payload = {
-
-      ...this.societyForm.value,
-
+    this.isSubmitting = true;
+    this.societyService.createSociety(this.societyForm.getRawValue(), {
       societyLogo: this.societyLogo,
-
       registrationCertificate: this.registrationCertificate
+    }).subscribe({
+      next: response => {
+        this.isSubmitting = false;
+        alert(response.message || '🎉 Society Created Successfully');
+      },
+      error: () => {
+        this.isSubmitting = false;
+        alert('Unable to create the society. Please try again.');
+      }
+    });
 
+  }
+
+  private isStepValid(step: number): boolean {
+    const controlsByStep: Record<number, string[]> = {
+      1: ['societyName', 'registrationNo', 'registrationDate', 'societyType', 'constructionYear', 'email', 'whatsapp', 'address1', 'city', 'state', 'pincode'],
+      2: ['wings', 'buildingName', 'buildingType', 'totalBuildings', 'residentialStartFloor', 'floors', 'flats', 'flatPattern'],
+      3: ['chairmanName', 'chairmanWing', 'chairmanFlat', 'chairmanMobile', 'chairmanEmail', 'chairmanStartDate', 'secretaryName', 'secretaryWing', 'secretaryFlat', 'secretaryMobile', 'secretaryEmail', 'secretaryStartDate', 'treasurerName', 'treasurerWing', 'treasurerFlat', 'treasurerMobile', 'treasurerEmail', 'treasurerStartDate'],
+      4: ['acceptDeclaration']
     };
 
-    console.log('Society Payload');
+    const controls = controlsByStep[step];
+    controls.forEach(name => this.societyForm.get(name)?.markAsTouched());
+    return controls.every(name => this.societyForm.get(name)?.valid);
+  }
 
-    console.log(payload);
-
-    alert('🎉 Society Created Successfully');
-
-    // Future API Call
-    // this.societyService.createSociety(payload).subscribe(...);
-
+  private showStepValidationError(): void {
+    alert('Please complete the required fields before continuing.');
+    setTimeout(() => document.querySelector<HTMLElement>('.ng-invalid.ng-touched')?.focus());
   }
 
 }
