@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { NumbersOnly } from '../../../shared/directives/numbers-only';
 import { SocietyService } from '../../../services/society.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-create-society',
@@ -15,7 +18,8 @@ import { SocietyService } from '../../../services/society.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NumbersOnly
+    NumbersOnly,
+    RouterModule
   ],
   templateUrl: './create-society.html',
   styleUrl: './create-society.css'
@@ -80,7 +84,9 @@ export class CreateSociety {
 
   constructor(
     private fb: FormBuilder,
-    private societyService: SocietyService
+    private societyService: SocietyService,
+    public authService: AuthService,
+    private router: Router
   ) {
 
 
@@ -155,8 +161,6 @@ export class CreateSociety {
 
       buildingType: ['Residential', Validators.required],
 
-      totalBuildings: [1, [Validators.required, Validators.min(1)]],
-
       // ===========================================
       // Ground Floor
       // ===========================================
@@ -209,7 +213,7 @@ export class CreateSociety {
 
       liftAvailable: ['No'],
 
-      liftCount: [0],
+      // liftCount: [0],
 
       // ===========================================
       // Parking
@@ -595,19 +599,28 @@ export class CreateSociety {
   private isStepValid(step: number): boolean {
     const controlsByStep: Record<number, string[]> = {
       1: ['societyName', 'registrationNo', 'registrationDate', 'societyType', 'constructionYear', 'email', 'whatsapp', 'address1', 'city', 'state', 'pincode'],
-      2: ['wings', 'buildingName', 'buildingType', 'totalBuildings', 'residentialStartFloor', 'floors', 'flats', 'flatPattern'],
+      2: ['wings', 'buildingName', 'buildingType', 'residentialStartFloor', 'floors', 'flats', 'flatPattern'],
       3: ['chairmanName', 'chairmanWing', 'chairmanFlat', 'chairmanMobile', 'chairmanEmail', 'chairmanStartDate', 'secretaryName', 'secretaryWing', 'secretaryFlat', 'secretaryMobile', 'secretaryEmail', 'secretaryStartDate', 'treasurerName', 'treasurerWing', 'treasurerFlat', 'treasurerMobile', 'treasurerEmail', 'treasurerStartDate'],
       4: ['acceptDeclaration']
     };
 
     const controls = controlsByStep[step];
-    controls.forEach(name => this.societyForm.get(name)?.markAsTouched());
+    // controls.forEach(name => this.societyForm.get(name)?.markAsTouched());
+    controls.forEach(name => {
+      const control = this.societyForm.get(name);
+      // console.log(name, control?.value, control?.valid, control?.errors);
+    });
     return controls.every(name => this.societyForm.get(name)?.valid);
   }
 
   private showStepValidationError(): void {
     alert('Please complete the required fields before continuing.');
     setTimeout(() => document.querySelector<HTMLElement>('.ng-invalid.ng-touched')?.focus());
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

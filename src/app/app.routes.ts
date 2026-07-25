@@ -17,6 +17,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   {
    path: 'create-society',
+   canActivate: [AuthGuard],
    loadComponent: () =>
       import('./features/society/create-society/create-society')
       .then(m => m.CreateSociety)

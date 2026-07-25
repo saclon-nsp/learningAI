@@ -31,6 +31,42 @@
     margin-bottom: 35px;
 }
 
+.header-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.home-btn,
+.logout-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.home-btn {
+    background: #2563eb;
+    color: #fff;
+}
+
+.home-btn:hover {
+    background: #1d4ed8;
+}
+
+.logout-btn {
+    background: #dc3545;
+    color: #fff;
+}
+
+.logout-btn:hover {
+    background: #b91c1c;
+}
+
 .header-content h1 {
     margin: 0;
     font-size: 34px;
@@ -59,6 +95,16 @@
     background: rgba(255,255,255,.18);
 
     backdrop-filter: blur(12px);
+}
+
+/* ===========================
+   asterisk for required fields
+=========================== */
+
+.required {
+  color: #dc3545;
+  margin-left: 2px;
+  font-weight: bold;
 }
 
 /* ===========================
