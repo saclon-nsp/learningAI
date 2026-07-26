@@ -120,7 +120,7 @@ export class OtpSignup {
 
     }
 
-    if (this.otp.length !== 6) {
+    if (this.otp.toString().length !== 6) {
 
       this.errorMessage = 'OTP must be 6 digits';
       return;
@@ -154,7 +154,7 @@ export class OtpSignup {
         // this.successMessage = 'OTP sent successfully';
 
         this.redirectToLogin.set(true);
-        this.popupService.success('Your phone number has been verified successfully.', 'OTP Verified');
+        this.popupService.success('Your phone number has been verified successfully', 'OTP Verified');
 
 
       },

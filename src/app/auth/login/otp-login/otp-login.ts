@@ -141,7 +141,7 @@ export class OtpLogin {
 
     }
 
-    if (this.otp.length !== 6) {
+    if (this.otp.toString().length !== 6) {
 
       this.errorMessage = 'OTP must be 6 digits';
       return;
@@ -156,12 +156,17 @@ export class OtpLogin {
 
       this.isLoadingVO.set(false);
 
-      this.redirectToHome.set(true);
-
-      this.popupService.success(
-        'Login Successful',
-        'Welcome Back'
+      // this.redirectToHome.set(true);
+      this.redirectToHome.set(false);
+      this.popupService.error(
+        'The OTP you entered is incorrect or has expired',
+        'Login Failed'
       );
+
+      // this.popupService.success(
+      //   'Login Successful',
+      //   'Redirecting you to dashboard'
+      // );
 
     }, 4000);
 

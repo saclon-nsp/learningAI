@@ -97,9 +97,9 @@ export class EmailLogin implements OnInit {
 
           this.popupService.success(
 
-            res.message || 'Login Successful',
+            res.message || 'Redirecting you to dashboard',
 
-            'Welcome'
+            'Login Successful'
 
           );
 
