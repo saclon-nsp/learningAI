@@ -4,6 +4,7 @@ import { SignupComponent } from '../app/auth/signup/signup';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { Documents } from './features/documents/documents';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -21,6 +22,13 @@ export const routes: Routes = [
    loadComponent: () =>
       import('./features/society/create-society/create-society')
       .then(m => m.CreateSociety)
+  },
+  {
+   path: 'documents',
+   canActivate: [AuthGuard],
+   loadComponent: () =>
+      import('./features/documents/documents')
+      .then(m => m.Documents)
   },
   { path: '**', redirectTo: '/login' }
 ];

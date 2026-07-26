@@ -1,0 +1,1497 @@
+/*=========================================================
+    DOCUMENTS PAGE
+=========================================================*/
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:host{
+    display:block;
+}
+
+.documents-container{
+
+    min-height:100vh;
+
+    padding:32px;
+
+    background:#f5f7fb;
+
+    font-family:
+        "Segoe UI",
+        Tahoma,
+        Geneva,
+        Verdana,
+        sans-serif;
+
+}
+
+/*=========================================================
+    HEADER
+=========================================================*/
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.page-header h2{
+
+    font-size:32px;
+
+    color:#1e293b;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.page-header p{
+
+    color:#64748b;
+
+    font-size:15px;
+
+    line-height:1.5;
+
+}
+
+/*=========================================================
+    UPLOAD BUTTON
+=========================================================*/
+
+.upload-button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:13px 24px;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.30s;
+
+    box-shadow:
+
+        0 8px 20px rgba(37,99,235,.20);
+
+}
+
+.upload-button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.upload-button:active{
+
+    transform:scale(.98);
+
+}
+
+/*=========================================================
+    PAGE TITLE BLOCK
+=========================================================*/
+
+.page-header>div{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+/*=========================================================
+    CARD STYLE
+=========================================================*/
+
+.table-card,
+.stat-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    box-shadow:
+
+        0 10px 30px rgba(15,23,42,.05);
+
+}
+
+/*=========================================================
+    TOOLBAR
+=========================================================*/
+
+.toolbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+}
+
+.search-box{
+
+    flex:1;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    height:48px;
+
+    padding:0 18px;
+
+    border:1px solid #dbe4f0;
+
+    border-radius:12px;
+
+    background:#fff;
+
+    outline:none;
+
+    font-size:14px;
+
+    transition:.30s;
+
+}
+
+.search-box input:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+.search-box input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+.filter-box,
+.sort-box{
+
+    width:210px;
+
+}
+
+.filter-box select,
+.sort-box select{
+
+    width:100%;
+
+    height:48px;
+
+    padding:0 15px;
+
+    border:1px solid #dbe4f0;
+
+    border-radius:12px;
+
+    background:#fff;
+
+    outline:none;
+
+    font-size:14px;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.filter-box select:focus,
+.sort-box select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+/*=========================================================
+    STATISTICS
+=========================================================*/
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+    margin-bottom:30px;
+
+}
+
+.stat-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    padding:22px;
+
+    transition:.30s;
+
+    border:1px solid #eef2f7;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 40px rgba(15,23,42,.08);
+
+}
+
+.icon{
+
+    width:62px;
+
+    height:62px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#eef4ff;
+
+    font-size:28px;
+
+    flex-shrink:0;
+
+}
+
+.stat-card h3{
+
+    font-size:28px;
+
+    color:#0f172a;
+
+    margin-bottom:4px;
+
+    font-weight:700;
+
+}
+
+.stat-card span{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+/*=========================================================
+    RESPONSIVE
+=========================================================*/
+
+@media(max-width:1200px){
+
+.stats-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:900px){
+
+.toolbar{
+
+flex-direction:column;
+
+align-items:stretch;
+
+}
+
+.filter-box,
+.sort-box{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.stats-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.upload-button{
+
+width:100%;
+
+}
+
+}
+
+/*=========================================================
+    DOCUMENT TABLE
+=========================================================*/
+
+.table-card{
+
+    width:100%;
+
+    overflow:hidden;
+
+    border:1px solid #edf2f7;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:#fff;
+
+}
+
+thead{
+
+    background:#f8fafc;
+
+}
+
+thead tr{
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+thead th{
+
+    padding:18px 20px;
+
+    text-align:left;
+
+    color:#475569;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+tbody tr{
+
+    transition:.25s;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+tbody tr:last-child{
+
+    border-bottom:none;
+
+}
+
+tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+tbody td{
+
+    padding:18px 20px;
+
+    vertical-align:middle;
+
+    color:#334155;
+
+    font-size:14px;
+
+}
+
+/*=========================================================
+    DOCUMENT INFO
+=========================================================*/
+
+.document-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.document-info img{
+
+    width:52px;
+
+    height:52px;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    background:#f1f5f9;
+
+    padding:8px;
+
+    border:1px solid #e2e8f0;
+
+}
+
+.document-info h4{
+
+    margin:0;
+
+    color:#0f172a;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.document-info span{
+
+    display:block;
+
+    margin-top:5px;
+
+    color:#64748b;
+
+    font-size:13px;
+
+}
+
+/*=========================================================
+    CATEGORY BADGE
+=========================================================*/
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:7px 14px;
+
+    border-radius:50px;
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+/*=========================================================
+    ACTION BUTTON
+=========================================================*/
+
+.action-button{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.action-button:hover{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+/*=========================================================
+    MENU
+=========================================================*/
+
+td{
+
+    position:relative;
+
+}
+
+.menu{
+
+    position:absolute;
+
+    right:15px;
+
+    top:58px;
+
+    width:190px;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    border:1px solid #edf2f7;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 45px rgba(15,23,42,.15);
+
+    z-index:999;
+
+    animation:menuAnimation .18s ease;
+
+}
+
+.menu.open-up{
+
+    top:auto;
+
+    bottom:58px;
+
+}
+
+@keyframes menuAnimation{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.menu button{
+
+    width:100%;
+
+    border:none;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    padding:14px 18px;
+
+    text-align:left;
+
+    font-size:14px;
+
+    color:#334155;
+
+    transition:.20s;
+
+}
+
+.menu button:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    padding-left:24px;
+
+}
+
+/*=========================================================
+    EMPTY TABLE
+=========================================================*/
+
+.empty-state{
+
+    padding:70px 20px;
+
+    text-align:center;
+
+}
+
+.empty-state h3{
+
+    color:#0f172a;
+
+    margin-bottom:10px;
+
+}
+
+.empty-state p{
+
+    color:#64748b;
+
+}
+
+/*=========================================================
+    RESPONSIVE TABLE
+=========================================================*/
+
+@media(max-width:1100px){
+
+.table-card{
+
+overflow-x:auto;
+
+}
+
+table{
+
+min-width:950px;
+
+}
+
+}
+
+/*=========================================================
+    MODAL OVERLAY
+=========================================================*/
+
+.modal-backdrop{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(4px);
+
+    padding:20px;
+
+    z-index:9999;
+
+}
+
+/*=========================================================
+    MODAL
+=========================================================*/
+
+.upload-modal{
+
+    width:100%;
+    max-width:480px;
+
+    height:80vh;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+@keyframes popupShow{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px) scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+/*=========================================================
+    HEADER
+=========================================================*/
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 22px;
+
+    border-bottom:1px solid #edf2f7;
+
+}
+
+.modal-header h2{
+
+    font-size:20px;
+
+    color:#0f172a;
+
+    font-weight:700;
+
+}
+
+.modal-header p{
+
+    margin-top:3px;
+
+    color:#64748b;
+
+    font-size:13px;
+
+}
+
+.close-button{
+
+    width:36px;
+
+    height:36px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#f1f5f9;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    transition:.25s;
+
+}
+
+.close-button:hover{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+/*=========================================================
+    BODY
+=========================================================*/
+
+.modal-body {
+
+    flex: 1;
+
+    padding: 20px 22px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+}
+
+.form-group{
+
+    margin-bottom:10px;
+
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.form-group label span{
+
+    color:#ef4444;
+
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+
+    width:100%;
+
+    border:1px solid #dbe4f0;
+
+    border-radius:10px;
+
+    padding:11px 14px;
+
+    outline:none;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+.form-group textarea{
+
+    resize:none;
+    height: 65px;
+    min-height:65px;
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+
+}
+
+/* Modal Scrollbar */
+
+.modal-body::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+.modal-body::-webkit-scrollbar-track {
+
+    background: #f1f5f9;
+
+    border-radius: 10px;
+
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+
+    background: #cbd5e1;
+
+    border-radius: 10px;
+
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+
+    background: #94a3b8;
+
+}
+
+/*=========================================================
+    FOOTER
+=========================================================*/
+
+.modal-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid #eee;
+
+    background: #fff;
+
+    flex-shrink: 0;
+
+}
+
+.cancel-btn,
+.upload-btn{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:10px 20px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.cancel-btn{
+
+    background:#f1f5f9;
+
+    color:#334155;
+
+}
+
+.cancel-btn:hover{
+
+    background:#e2e8f0;
+
+}
+
+.upload-btn{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.upload-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/*=========================================================
+    UPLOAD AREA
+=========================================================*/
+
+.upload-box{
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:14px;
+
+    background:#f8fbff;
+
+    padding:12px;
+    min-height: 130px;
+
+    text-align:center;
+
+    transition:.30s;
+
+    cursor:pointer;
+
+}
+
+.upload-box:hover{
+
+    border-color:#2563eb;
+
+    background:#eef6ff;
+
+}
+
+.upload-icon{
+
+    width:45px;
+
+    height:45px;
+    font-size:22px;
+
+    margin-bottom:8px;
+
+    margin:0 auto 15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:#dbeafe;
+
+    font-size:34px;
+
+}
+
+.upload-box h3{
+
+    font-size:15px;
+    margin:5px 0;
+
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+}
+
+.upload-box p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    margin-bottom:15px;
+
+}
+
+.upload-box small{
+
+    display:block;
+
+    margin-top:12px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+}
+
+/*=========================================================
+    BROWSE BUTTON
+=========================================================*/
+
+.browse-button{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    width:150px;
+
+    padding:8px 12px;
+
+    margin:auto;
+
+    font-size:13px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.30s;
+
+}
+
+.browse-button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.browse-button input{
+
+    display:none;
+
+}
+
+/*=========================================================
+    SELECTED FILE
+=========================================================*/
+
+.selected-file{
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+
+    border:1px solid #bfdbfe;
+
+}
+
+.selected-file strong{
+
+    display:block;
+
+    color:#0f172a;
+
+    font-size:14px;
+
+    margin-bottom:4px;
+
+}
+
+.selected-file p{
+
+    color:#64748b;
+
+    font-size:12px;
+
+}
+
+/*=========================================================
+    REMOVE FILE BUTTON
+=========================================================*/
+
+.remove-file{
+
+    border:none;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.remove-file:hover{
+
+    background:#dc2626;
+
+}
+
+/*=========================================================
+    DRAG ACTIVE EFFECT
+=========================================================*/
+
+.upload-box.drag-active{
+
+    border-color:#2563eb;
+
+    background:#dbeafe;
+
+    transform:scale(1.01);
+
+}
+
+/*=========================================================
+    UPLOAD AREA
+=========================================================*/
+
+.upload-box{
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:14px;
+
+    background:#f8fbff;
+
+    padding:25px 20px;
+
+    text-align:center;
+
+    transition:.30s;
+
+    cursor:pointer;
+
+}
+
+.upload-box:hover{
+
+    border-color:#2563eb;
+
+    background:#eef6ff;
+
+}
+
+.upload-icon{
+
+    width:70px;
+
+    height:70px;
+
+    margin:0 auto 15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:#dbeafe;
+
+    font-size:34px;
+
+}
+
+.upload-box h3{
+
+    font-size:17px;
+
+    color:#0f172a;
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+}
+
+.upload-box p{
+
+    color:#64748b;
+
+    font-size:13px;
+
+    margin-bottom:15px;
+
+}
+
+.upload-box small{
+
+    display:block;
+
+    margin-top:12px;
+
+    color:#94a3b8;
+
+    font-size:12px;
+
+}
+
+/*=========================================================
+    BROWSE BUTTON
+=========================================================*/
+
+.browse-button{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.30s;
+
+}
+
+.browse-button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+.browse-button input{
+
+    display:none;
+
+}
+
+/*=========================================================
+    SELECTED FILE
+=========================================================*/
+
+.selected-file{
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+
+    border:1px solid #bfdbfe;
+
+}
+
+.selected-file strong{
+
+    display:block;
+
+    color:#0f172a;
+
+    font-size:14px;
+
+    margin-bottom:4px;
+
+}
+
+.selected-file p{
+
+    color:#64748b;
+
+    font-size:12px;
+
+}
+
+/*=========================================================
+    REMOVE FILE BUTTON
+=========================================================*/
+
+.remove-file{
+
+    border:none;
+
+    background:#ef4444;
+
+    color:#fff;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.remove-file:hover{
+
+    background:#dc2626;
+
+}
+
+/*=========================================================
+    DRAG ACTIVE EFFECT
+=========================================================*/
+
+.upload-box.drag-active{
+
+    border-color:#2563eb;
+
+    background:#dbeafe;
+
+    transform:scale(1.01);
+
+}

@@ -1,0 +1,488 @@
+<div class="documents-container">
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>Documents</h2>
+
+            <p>
+                Store and manage all important society documents.
+            </p>
+
+        </div>
+
+        <button
+            class="upload-button"
+            (click)="openUploadModal()">
+
+            + Upload Document
+
+        </button>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Toolbar -->
+    <!-- ========================= -->
+
+    <div class="toolbar">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="Search documents..."
+                [(ngModel)]="searchText">
+
+        </div>
+
+        <div class="filter-box">
+
+            <select
+                [(ngModel)]="selectedCategory">
+
+                <option
+                    *ngFor="let category of categories">
+
+                    {{category}}
+
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="sort-box">
+
+            <select
+                [(ngModel)]="sortBy">
+
+                <option
+                    *ngFor="let option of sortOptions">
+
+                    {{option}}
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Statistics -->
+    <!-- ========================= -->
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="icon">
+
+                📄
+
+            </div>
+
+            <div>
+
+                <h3>{{totalDocuments}}</h3>
+
+                <span>Total Documents</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="icon">
+
+                📕
+
+            </div>
+
+            <div>
+
+                <h3>{{totalPdf}}</h3>
+
+                <span>PDF Files</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="icon">
+
+                🖼️
+
+            </div>
+
+            <div>
+
+                <h3>{{totalImages}}</h3>
+
+                <span>Images</span>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="icon">
+
+                ⭐
+
+            </div>
+
+            <div>
+
+                <h3>{{recentUploads}}</h3>
+
+                <span>Recent Uploads</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+    <!-- Table -->
+    <!-- ========================= -->
+
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Document</th>
+
+                    <th>Category</th>
+
+                    <th>Uploaded By</th>
+
+                    <th>Date</th>
+
+                    <th>Size</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr
+                    *ngFor="let document of filteredDocuments">
+
+                    <td>
+
+                        <div class="document-info">
+
+                            <img
+                                [src]="getFileIcon(document.fileName)"
+                                alt="">
+
+                            <div>
+
+                                <h4>
+
+                                    {{document.title}}
+
+                                </h4>
+
+                                <span>
+
+                                    {{document.fileName}}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge">
+
+                            {{document.category}}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {{document.uploadedBy}}
+
+                    </td>
+
+                    <td>
+
+                        {{document.uploadedDate | date:'dd MMM yyyy'}}
+
+                    </td>
+
+                    <td>
+
+                        {{formatFileSize(document.fileSize)}}
+
+                    </td>
+
+                    <td>
+
+                        <button class="action-button" (click)="toggleMenu(document.id, $event)"> ⋮ </button>
+
+
+                        <div
+                            class="menu"
+                            [class.open-up]="activeMenu === document.id && openUp"
+                            *ngIf="activeMenu===document.id">
+
+                            <button
+                                (click)="viewDocumentById(document)">
+
+                                👁 View
+
+                            </button>
+
+                            <button
+                                (click)="download(document)">
+
+                                ⬇ Download
+
+                            </button>
+
+                            <button
+                                (click)="delete(document)">
+
+                                🗑 Delete
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- Upload Document Modal -->
+<!-- ========================================================= -->
+
+<div
+    class="modal-backdrop"
+    *ngIf="showUploadModal">
+
+    <div class="upload-modal">
+
+        <!-- Header -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>Upload Document</h2>
+
+                <p>
+                    Upload society documents for members.
+                </p>
+
+            </div>
+
+            <button
+                class="close-button"
+                (click)="closeUploadModal()">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <!-- Form -->
+
+        <div class="modal-body">
+
+            <!-- Title -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Document Title <span>*</span>
+
+                </label>
+
+                <input
+                    type="text"
+                    placeholder="Enter document title"
+                    [(ngModel)]="title">
+
+            </div>
+
+            <!-- Description -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Description
+
+                </label>
+
+                <textarea
+                    rows="4"
+                    placeholder="Write short description..."
+                    [(ngModel)]="description">
+
+                </textarea>
+
+            </div>
+
+            <!-- Category -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Category
+
+                </label>
+
+                <select
+                    [(ngModel)]="category">
+
+                    <option>General</option>
+
+                    <option>Legal</option>
+
+                    <option>Finance</option>
+
+                    <option>Maintenance</option>
+
+                    <option>Safety</option>
+
+                </select>
+
+            </div>
+
+            <!-- Upload -->
+
+            <div class="form-group">
+
+                <label>
+
+                    Upload File <span>*</span>
+
+                </label>
+
+                <div class="upload-box">
+
+                    <div class="upload-icon">
+
+                        ☁️
+
+                    </div>
+
+                    <h3>
+
+                        Drag & Drop your file here
+
+                    </h3>
+
+                    <p>
+
+                        or
+
+                    </p>
+
+                    <label
+                        class="browse-button">
+
+                        Browse File
+
+                        <input
+                            type="file"
+                            hidden
+                            multiple
+                            (change)="onFileSelected($event)">
+
+                    </label>
+
+                    <small>
+
+                        Supported:
+                        PDF, DOC, DOCX, XLS, XLSX, PNG, JPG
+
+                    </small>
+
+                </div>
+
+            </div>
+
+            <!-- Selected File -->
+
+            <div class="selected-file" *ngFor="let file of selectedFiles">
+
+                <div>
+
+                    <strong> {{file.name}} </strong>
+                    <p> {{formatFileSize(file.size)}}  </p>
+
+                </div>
+
+                <button class="remove-file" (click)="removeFile(file)"> Remove </button>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+
+        <div class="modal-footer">
+
+            <button
+                class="cancel-btn"
+                (click)="closeUploadModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+                class="upload-btn"
+                (click)="uploadDocument()">
+
+                Upload Document
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
