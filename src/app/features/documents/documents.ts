@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DocumentModel } from './models/document.model';
 import { DocumentService } from '../../services/document.service';
+import { AppHeader } from '../../shared/components/app-header/app-header';
 
 @Component({
   selector: 'app-documents',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AppHeader],
   templateUrl: './documents.html',
   styleUrls: ['./documents.css']
 })

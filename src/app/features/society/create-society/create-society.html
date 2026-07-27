@@ -2,7 +2,7 @@
    <!--========================
       Header
       =========================-->
-   <div class="page-header">
+   <!-- <div class="page-header">
       <div class="header-content">
          <h1>Create Society</h1>
          <p>
@@ -21,7 +21,8 @@
       <div class="header-icon">
          🏢
       </div>
-   </div>
+   </div> -->
+   <app-header title="Create Society"></app-header>
    <!--========================
       Stepper
       =========================-->
@@ -2882,8 +2883,9 @@
          type="button"
          class="btn-primary"
          *ngIf="currentStep<4"
+         [disabled]="isSavingStep"
          (click)="nextStep()">
-         Next →
+         {{ isSavingStep ? 'Saving...' : 'Next →' }}
          </button>
          <button
          type="button"
