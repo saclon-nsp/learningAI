@@ -35,7 +35,11 @@ export class SocietyService {
     if (files?.societyLogo) {
       formData.append('societyLogo', files.societyLogo, files.societyLogo.name);
     }
-    if (files?.registrationCertificate) {
+    if (files?.registrationCertificates && files.registrationCertificates.length > 0) {
+      files.registrationCertificates.forEach(file => {
+        formData.append('registrationCertificates', file, file.name);
+      });
+    } else if (files?.registrationCertificate) {
       formData.append('registrationCertificate', files.registrationCertificate, files.registrationCertificate.name);
     }
 

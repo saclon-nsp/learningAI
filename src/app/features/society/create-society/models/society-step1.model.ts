@@ -39,4 +39,6 @@ export interface SocietyStep1Model {
 export interface SocietyStep1Files {
   societyLogo?: File | null;
   registrationCertificate?: File | null;
+  registrationCertificates?: File[] | null;
 }
+

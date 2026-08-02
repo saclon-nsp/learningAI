@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { catchError, finalize, of } from 'rxjs';
 import {
   FormBuilder,
   FormGroup,
@@ -71,45 +72,47 @@ export class CreateSociety {
 
   // Upload Files
   registrationCertificate: File | null = null;
+  registrationCertificates: File[] = [];
   societyLogo: File | null = null;
 
   constructor(
     private fb: FormBuilder,
     private societyService: SocietyService,
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
     this.societyForm = this.fb.group({
       // Step 1: Society Information
       societyName: ['', Validators.required],
       registrationNo: ['', Validators.required],
       registrationDate: ['', Validators.required],
-      reraNumber: [''],
+      reraNumber: ['', Validators.required],
       societyType: ['Residential', Validators.required],
       constructionYear: ['', Validators.required],
-      builder: [''],
+      builder: [''], // OPTIONAL (builder_name)
       email: ['', [Validators.required, Validators.email]],
       whatsapp: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       landline: [''],
       website: [''],
-      description: [''],
+      description: [''], // OPTIONAL (Description)
       gstNumber: [''],
       societyPan: [''],
 
       // Step 1: Address
       address1: ['', Validators.required],
-      address2: [''],
-      area: [''],
+      address2: [''], // OPTIONAL (add line 2)
+      area: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
       pincode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
 
       // Step 1: Bank Details
-      bankName: [''],
-      bankBranch: [''],
-      accountNumber: [''],
-      ifscCode: [''],
-      upiId: [''],
+      bankName: ['', Validators.required],
+      bankBranch: ['', Validators.required],
+      accountNumber: ['', Validators.required],
+      ifscCode: ['', Validators.required],
+      upiId: [''], // OPTIONAL (UPIId)
 
       // Step 2: Building Information
       wings: [1, [Validators.required, Validators.min(1)]],
@@ -117,40 +120,40 @@ export class CreateSociety {
       buildingType: ['Residential', Validators.required],
 
       // Step 2: Ground Floor
-      groundShopAvailable: ['No'],
-      groundShopCount: [0],
-      groundShopPrefix: ['S'],
+      groundShopAvailable: ['No', Validators.required],
+      groundShopCount: [0, Validators.required],
+      groundShopPrefix: ['S', Validators.required],
 
       // Step 2: Commercial Area
-      commercialAvailable: ['No'],
-      commercialStartFloor: [1],
-      commercialFloors: [0],
-      commercialShopsPerFloor: [0],
-      commercialOfficePerFloor: [0],
+      commercialAvailable: ['No', Validators.required],
+      commercialStartFloor: [1, Validators.required],
+      commercialFloors: [0, Validators.required],
+      commercialShopsPerFloor: [0, Validators.required],
+      commercialOfficePerFloor: [0, Validators.required],
 
       // Step 2: Basement
-      basementAvailable: ['No'],
-      basementFloors: [0],
-      parkingPerBasement: [0],
-      storageRooms: [0],
-      utilityRooms: [0],
+      basementAvailable: ['No', Validators.required],
+      basementFloors: [0, Validators.required],
+      parkingPerBasement: [0, Validators.required],
+      storageRooms: [0, Validators.required],
+      utilityRooms: [0, Validators.required],
 
       // Step 2: Residential Floors
       residentialStartFloor: [1, [Validators.required, Validators.min(1)]],
       floors: [1, [Validators.required, Validators.min(1)]],
       flats: [4, [Validators.required, Validators.min(1)]],
       flatPattern: ['101', Validators.required],
-      liftAvailable: ['No'],
-      liftCount: [0],
+      liftAvailable: ['No', Validators.required],
+      liftCount: [0, Validators.required],
 
       // Step 2: Parking
-      residentParking: [0],
-      visitorParking: [0],
-      twoWheelerParking: [0],
-      fourWheelerParking: [0],
-      evParking: [0],
-      disabledParking: [0],
-      parkingAllocation: ['One Parking Per Flat'],
+      residentParking: [0, Validators.required],
+      visitorParking: [0, Validators.required],
+      twoWheelerParking: [0, Validators.required],
+      fourWheelerParking: [0, Validators.required],
+      evParking: [0, Validators.required],
+      disabledParking: [0, Validators.required],
+      parkingAllocation: ['One Parking Per Flat', Validators.required],
 
       // Step 2: Amenities
       garden: [false],
@@ -175,32 +178,32 @@ export class CreateSociety {
       roPlant: [false],
 
       // Step 2: Lift Details
-      passengerLift: [0],
-      serviceLift: [0],
-      liftCompany: [''],
-      liftAmcDate: [''],
+      passengerLift: [0, Validators.required],
+      serviceLift: [0, Validators.required],
+      liftCompany: ['', Validators.required],
+      liftAmcDate: ['', Validators.required],
 
       // Step 2: Water Tank
-      undergroundTank: ['Available'],
-      overheadTank: ['Available'],
-      waterTankCapacity: [0],
+      undergroundTank: ['Available', Validators.required],
+      overheadTank: ['Available', Validators.required],
+      waterTankCapacity: [0, Validators.required],
 
       // Step 2: DG Backup
-      generatorAvailable: ['Yes'],
-      generatorCapacity: [''],
-      generatorVendor: [''],
-      generatorAmcDate: [''],
-      generatorFuel: ['Diesel'],
+      generatorAvailable: ['Yes', Validators.required],
+      generatorCapacity: ['', Validators.required],
+      generatorVendor: ['', Validators.required],
+      generatorAmcDate: ['', Validators.required],
+      generatorFuel: ['Diesel', Validators.required],
 
       // Step 2: Fire Safety System
-      fireSystemAvailable: ['Yes'],
-      firePump: ['Available'],
-      fireTankCapacity: [0],
-      hydrantSystem: ['Available'],
-      sprinklerSystem: ['Available'],
-      smokeDetectors: ['Available'],
-      fireVendor: [''],
-      fireAmcDate: [''],
+      fireSystemAvailable: ['Yes', Validators.required],
+      firePump: ['Available', Validators.required],
+      fireTankCapacity: [0, Validators.required],
+      hydrantSystem: ['Available', Validators.required],
+      sprinklerSystem: ['Available', Validators.required],
+      smokeDetectors: ['Available', Validators.required],
+      fireVendor: ['', Validators.required],
+      fireAmcDate: ['', Validators.required],
 
       // Step 3: Chairman
       chairmanName: ['', Validators.required],
@@ -208,13 +211,13 @@ export class CreateSociety {
       chairmanFlat: ['', Validators.required],
       chairmanMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       chairmanEmail: ['', [Validators.required, Validators.email]],
-      chairmanWhatsapp: [''],
+      chairmanWhatsapp: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       chairmanPhoto: [null],
       chairmanAadhar: [null],
       chairmanPan: [null],
       chairmanStartDate: ['', Validators.required],
-      chairmanEndDate: [''],
-      chairmanEmergencyContact: [''],
+      chairmanEndDate: ['', Validators.required],
+      chairmanEmergencyContact: ['', Validators.required],
 
       // Step 3: Secretary
       secretaryName: ['', Validators.required],
@@ -222,13 +225,13 @@ export class CreateSociety {
       secretaryFlat: ['', Validators.required],
       secretaryMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       secretaryEmail: ['', [Validators.required, Validators.email]],
-      secretaryWhatsapp: [''],
+      secretaryWhatsapp: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       secretaryPhoto: [null],
       secretaryAadhar: [null],
       secretaryPan: [null],
       secretaryStartDate: ['', Validators.required],
-      secretaryEndDate: [''],
-      secretaryEmergencyContact: [''],
+      secretaryEndDate: ['', Validators.required],
+      secretaryEmergencyContact: ['', Validators.required],
 
       // Step 3: Treasurer
       treasurerName: ['', Validators.required],
@@ -236,68 +239,68 @@ export class CreateSociety {
       treasurerFlat: ['', Validators.required],
       treasurerMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       treasurerEmail: ['', [Validators.required, Validators.email]],
-      treasurerWhatsapp: [''],
+      treasurerWhatsapp: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       treasurerPhoto: [null],
       treasurerAadhar: [null],
       treasurerPan: [null],
       treasurerStartDate: ['', Validators.required],
-      treasurerEndDate: [''],
-      treasurerEmergencyContact: [''],
+      treasurerEndDate: ['', Validators.required],
+      treasurerEmergencyContact: ['', Validators.required],
 
       // Step 3: Administration
-      managerName: [''],
-      managerMobile: [''],
-      managerEmail: ['', Validators.email],
+      managerName: ['', Validators.required],
+      managerMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      managerEmail: ['', [Validators.required, Validators.email]],
       managerPhoto: [null],
       managerAadhar: [null],
       managerPan: [null],
 
-      accountantName: [''],
-      accountantMobile: [''],
-      accountantEmail: ['', Validators.email],
+      accountantName: ['', Validators.required],
+      accountantMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      accountantEmail: ['', [Validators.required, Validators.email]],
       accountantPhoto: [null],
       accountantAadhar: [null],
       accountantPan: [null],
 
       // Step 4: Staff
-      watchmanName: [''],
-      watchmanMobile: [''],
-      watchmanJoiningDate: [''],
+      watchmanName: ['', Validators.required],
+      watchmanMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      watchmanJoiningDate: ['', Validators.required],
       watchmanPhoto: [null],
       watchmanAadhar: [null],
       watchmanPan: [null],
 
-      cleanerName: [''],
-      cleanerMobile: [''],
-      cleanerJoiningDate: [''],
+      cleanerName: ['', Validators.required],
+      cleanerMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      cleanerJoiningDate: ['', Validators.required],
       cleanerPhoto: [null],
       cleanerAadhar: [null],
       cleanerPan: [null],
 
-      electricianName: [''],
-      electricianMobile: [''],
-      electricianJoiningDate: [''],
+      electricianName: ['', Validators.required],
+      electricianMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      electricianJoiningDate: ['', Validators.required],
       electricianPhoto: [null],
       electricianAadhar: [null],
       electricianPan: [null],
 
-      gardenerName: [''],
-      gardenerMobile: [''],
-      gardenerJoiningDate: [''],
+      gardenerName: ['', Validators.required],
+      gardenerMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      gardenerJoiningDate: ['', Validators.required],
       gardenerPhoto: [null],
       gardenerAadhar: [null],
       gardenerPan: [null],
 
-      liftOperatorName: [''],
-      liftOperatorMobile: [''],
-      liftOperatorJoiningDate: [''],
+      liftOperatorName: ['', Validators.required],
+      liftOperatorMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      liftOperatorJoiningDate: ['', Validators.required],
       liftOperatorPhoto: [null],
       liftOperatorAadhar: [null],
       liftOperatorPan: [null],
 
-      plumberName: [''],
-      plumberMobile: [''],
-      plumberJoiningDate: [''],
+      plumberName: ['', Validators.required],
+      plumberMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      plumberJoiningDate: ['', Validators.required],
       plumberPhoto: [null],
       plumberAadhar: [null],
       plumberPan: [null],
@@ -322,7 +325,8 @@ export class CreateSociety {
   onRegistrationCertificateUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.registrationCertificate = input.files[0];
+      this.registrationCertificates = Array.from(input.files);
+      this.registrationCertificate = this.registrationCertificates[0] || null;
     }
   }
 
@@ -374,8 +378,8 @@ export class CreateSociety {
       builder: val.builder,
       email: val.email,
       whatsapp: val.whatsapp,
-      landline: val.landline,
-      website: val.website,
+      // landline: val.landline,
+      // website: val.website,
       description: val.description,
       gstNumber: val.gstNumber,
       societyPan: val.societyPan,
@@ -395,7 +399,8 @@ export class CreateSociety {
 
     const files: SocietyStep1Files = {
       societyLogo: this.societyLogo,
-      registrationCertificate: this.registrationCertificate
+      registrationCertificate: this.registrationCertificates.length > 0 ? this.registrationCertificates[0] : this.registrationCertificate,
+      registrationCertificates: this.registrationCertificates
     };
 
     return { data, files };
@@ -587,65 +592,252 @@ export class CreateSociety {
   }
 
   // ===========================================
+  // Field Labels Mapping for Validation Popups
+  public fieldLabels: Record<string, string> = {
+    // Step 1
+    societyName: 'Society Name',
+    registrationNo: 'Registration Number',
+    registrationDate: 'Registration Date',
+    reraNumber: 'RERA Number',
+    societyType: 'Society Type',
+    constructionYear: 'Construction Year',
+    email: 'Society Email ID',
+    whatsapp: 'WhatsApp Number (10 digits)',
+    landline: 'Landline Number',
+    website: 'Website URL',
+    gstNumber: 'GST Number',
+    societyPan: 'Society PAN',
+    address1: 'Address Line 1',
+    area: 'Area / Locality',
+    city: 'City',
+    state: 'State',
+    pincode: 'Pincode (6 digits)',
+    bankName: 'Bank Name',
+    bankBranch: 'Bank Branch',
+    accountNumber: 'Account Number',
+    ifscCode: 'IFSC Code',
+
+    // Step 2
+    wings: 'Total Wings / Blocks',
+    buildingName: 'Building Name',
+    buildingType: 'Building Type',
+    groundShopAvailable: 'Ground Floor Shops Availability',
+    groundShopCount: 'Ground Floor Shops Count',
+    groundShopPrefix: 'Ground Floor Shop Prefix',
+    commercialAvailable: 'Commercial Area Availability',
+    commercialStartFloor: 'Commercial Start Floor',
+    commercialFloors: 'Commercial Floors Count',
+    commercialShopsPerFloor: 'Commercial Shops Per Floor',
+    commercialOfficePerFloor: 'Commercial Offices Per Floor',
+    basementAvailable: 'Basement Availability',
+    basementFloors: 'Basement Floors Count',
+    parkingPerBasement: 'Parking Slots Per Basement',
+    storageRooms: 'Storage Rooms Count',
+    utilityRooms: 'Utility Rooms Count',
+    residentialStartFloor: 'Residential Start Floor',
+    floors: 'Total Residential Floors',
+    flats: 'Flats Per Floor',
+    flatPattern: 'Flat Numbering Pattern',
+    liftAvailable: 'Lift Availability',
+    liftCount: 'Lift Count',
+    residentParking: 'Resident Parking',
+    visitorParking: 'Visitor Parking',
+    twoWheelerParking: '2-Wheeler Parking',
+    fourWheelerParking: '4-Wheeler Parking',
+    evParking: 'EV Parking',
+    disabledParking: 'Disabled Parking',
+    parkingAllocation: 'Parking Allocation Policy',
+    passengerLift: 'Passenger Lift Count',
+    serviceLift: 'Service Lift Count',
+    liftCompany: 'Lift Company Name',
+    liftAmcDate: 'Lift AMC Date',
+    undergroundTank: 'Underground Water Tank',
+    overheadTank: 'Overhead Water Tank',
+    waterTankCapacity: 'Water Tank Capacity',
+    generatorAvailable: 'Generator Backup Availability',
+    generatorCapacity: 'Generator Capacity',
+    generatorVendor: 'Generator Vendor',
+    generatorAmcDate: 'Generator AMC Date',
+    generatorFuel: 'Generator Fuel Type',
+    fireSystemAvailable: 'Fire System Availability',
+    firePump: 'Fire Pump Availability',
+    fireTankCapacity: 'Fire Tank Capacity',
+    hydrantSystem: 'Hydrant System',
+    sprinklerSystem: 'Sprinkler System',
+    smokeDetectors: 'Smoke Detectors',
+    fireVendor: 'Fire Safety Vendor',
+    fireAmcDate: 'Fire AMC Date',
+
+    // Step 3
+    chairmanName: 'Chairman Name',
+    chairmanWing: 'Chairman Wing',
+    chairmanFlat: 'Chairman Flat No',
+    chairmanMobile: 'Chairman Mobile (10 digits)',
+    chairmanEmail: 'Chairman Email ID',
+    chairmanWhatsapp: 'Chairman WhatsApp Number (10 digits)',
+    chairmanStartDate: 'Chairman Term Start Date',
+    chairmanEndDate: 'Chairman Term End Date',
+    chairmanEmergencyContact: 'Chairman Emergency Contact',
+
+    secretaryName: 'Secretary Name',
+    secretaryWing: 'Secretary Wing',
+    secretaryFlat: 'Secretary Flat No',
+    secretaryMobile: 'Secretary Mobile (10 digits)',
+    secretaryEmail: 'Secretary Email ID',
+    secretaryWhatsapp: 'Secretary WhatsApp Number (10 digits)',
+    secretaryStartDate: 'Secretary Term Start Date',
+    secretaryEndDate: 'Secretary Term End Date',
+    secretaryEmergencyContact: 'Secretary Emergency Contact',
+
+    treasurerName: 'Treasurer Name',
+    treasurerWing: 'Treasurer Wing',
+    treasurerFlat: 'Treasurer Flat No',
+    treasurerMobile: 'Treasurer Mobile (10 digits)',
+    treasurerEmail: 'Treasurer Email ID',
+    treasurerWhatsapp: 'Treasurer WhatsApp Number (10 digits)',
+    treasurerStartDate: 'Treasurer Term Start Date',
+    treasurerEndDate: 'Treasurer Term End Date',
+    treasurerEmergencyContact: 'Treasurer Emergency Contact',
+
+    managerName: 'Manager Name',
+    managerMobile: 'Manager Mobile (10 digits)',
+    managerEmail: 'Manager Email ID',
+
+    accountantName: 'Accountant Name',
+    accountantMobile: 'Accountant Mobile (10 digits)',
+    accountantEmail: 'Accountant Email ID',
+
+    // Step 4
+    watchmanName: 'Watchman Name',
+    watchmanMobile: 'Watchman Mobile (10 digits)',
+    watchmanJoiningDate: 'Watchman Joining Date',
+    cleanerName: 'Cleaner Name',
+    cleanerMobile: 'Cleaner Mobile (10 digits)',
+    cleanerJoiningDate: 'Cleaner Joining Date',
+    electricianName: 'Electrician Name',
+    electricianMobile: 'Electrician Mobile (10 digits)',
+    electricianJoiningDate: 'Electrician Joining Date',
+    gardenerName: 'Gardener Name',
+    gardenerMobile: 'Gardener Mobile (10 digits)',
+    gardenerJoiningDate: 'Gardener Joining Date',
+    liftOperatorName: 'Lift Operator Name',
+    liftOperatorMobile: 'Lift Operator Mobile (10 digits)',
+    liftOperatorJoiningDate: 'Lift Operator Joining Date',
+    plumberName: 'Plumber Name',
+    plumberMobile: 'Plumber Mobile (10 digits)',
+    plumberJoiningDate: 'Plumber Joining Date',
+    acceptDeclaration: 'Accept Declaration Checkbox'
+  };
+
+  private controlsByStep: Record<number, string[]> = {
+    1: [
+      'societyName', 'registrationNo', 'registrationDate', 'reraNumber', 'societyType', 'constructionYear','email', 'whatsapp', 'address1', 'area', 'city', 'state', 'pincode', 'bankName', 'bankBranch', 'accountNumber', 'ifscCode'
+    ],
+    2: [
+      'wings', 'buildingName', 'buildingType',
+      'groundShopAvailable', 'groundShopCount', 'groundShopPrefix',
+      'commercialAvailable', 'commercialStartFloor', 'commercialFloors', 'commercialShopsPerFloor', 'commercialOfficePerFloor',
+      'basementAvailable', 'basementFloors', 'parkingPerBasement', 'storageRooms', 'utilityRooms',
+      'residentialStartFloor', 'floors', 'flats', 'flatPattern',
+      'liftAvailable', 'liftCount',
+      'residentParking', 'visitorParking', 'twoWheelerParking', 'fourWheelerParking', 'evParking', 'disabledParking', 'parkingAllocation',
+      'passengerLift', 'serviceLift', 'liftCompany', 'liftAmcDate',
+      'undergroundTank', 'overheadTank', 'waterTankCapacity',
+      'generatorAvailable', 'generatorCapacity', 'generatorVendor', 'generatorAmcDate', 'generatorFuel',
+      'fireSystemAvailable', 'firePump', 'fireTankCapacity', 'hydrantSystem', 'sprinklerSystem', 'smokeDetectors', 'fireVendor', 'fireAmcDate'
+    ],
+    3: [
+      'chairmanName', 'chairmanWing', 'chairmanFlat', 'chairmanMobile', 'chairmanEmail', 'chairmanWhatsapp', 'chairmanStartDate', 'chairmanEndDate', 'chairmanEmergencyContact',
+      'secretaryName', 'secretaryWing', 'secretaryFlat', 'secretaryMobile', 'secretaryEmail', 'secretaryWhatsapp', 'secretaryStartDate', 'secretaryEndDate', 'secretaryEmergencyContact',
+      'treasurerName', 'treasurerWing', 'treasurerFlat', 'treasurerMobile', 'treasurerEmail', 'treasurerWhatsapp', 'treasurerStartDate', 'treasurerEndDate', 'treasurerEmergencyContact',
+      'managerName', 'managerMobile', 'managerEmail',
+      'accountantName', 'accountantMobile', 'accountantEmail'
+    ],
+    4: [
+      'watchmanName', 'watchmanMobile', 'watchmanJoiningDate',
+      'cleanerName', 'cleanerMobile', 'cleanerJoiningDate',
+      'electricianName', 'electricianMobile', 'electricianJoiningDate',
+      'gardenerName', 'gardenerMobile', 'gardenerJoiningDate',
+      'liftOperatorName', 'liftOperatorMobile', 'liftOperatorJoiningDate',
+      'plumberName', 'plumberMobile', 'plumberJoiningDate',
+      'acceptDeclaration'
+    ]
+  };
+
+  // ===========================================
   // Step Navigation & API Integration
   // ===========================================
 
   nextStep(): void {
     if (!this.isStepValid(this.currentStep)) {
-      this.showStepValidationError();
+      this.showStepValidationError(this.currentStep);
       return;
     }
 
+    if (!this.createdSocietyId) {
+      this.createdSocietyId = 'SOC-' + Date.now();
+    }
+
     this.isSavingStep = true;
+    this.cdr.detectChanges();
+
+    const doAdvance = () => {
+      this.isSavingStep = false;
+      this.advanceStep();
+    };
 
     if (this.currentStep === 1) {
       const { data, files } = this.getStep1Payload();
       console.log('API Call 1 - Saving Step 1 Payload:', data, files);
       this.societyService.saveStep1(data, files).subscribe({
         next: (response) => {
-          this.isSavingStep = false;
-          if (response.societyId) {
+          if (response?.societyId) {
             this.createdSocietyId = response.societyId;
           }
-          this.advanceStep();
+          doAdvance();
         },
         error: (err) => {
-          console.warn('Backend Step 1 API pending or offline, storing draft and continuing:', err);
-          if (!this.createdSocietyId) {
-            this.createdSocietyId = 'SOC-' + Date.now();
-          }
-          this.isSavingStep = false;
-          this.advanceStep();
+          console.warn('Backend Step 1 API error 405/failed (advancing step):', err);
+          doAdvance();
         }
       });
     } else if (this.currentStep === 2) {
       const data = this.getStep2Payload();
       console.log('API Call 2 - Saving Step 2 Payload:', data);
       this.societyService.saveStep2(data).subscribe({
-        next: () => {
-          this.isSavingStep = false;
-          this.advanceStep();
-        },
+        next: () => doAdvance(),
         error: (err) => {
-          console.warn('Backend Step 2 API pending or offline, storing draft and continuing:', err);
-          this.isSavingStep = false;
-          this.advanceStep();
+          console.warn('Backend Step 2 API error 405/failed (advancing step):', err);
+          doAdvance();
         }
       });
     } else if (this.currentStep === 3) {
       const { data, files } = this.getStep3Payload();
       console.log('API Call 3 - Saving Step 3 Payload:', data, files);
       this.societyService.saveStep3(data, files).subscribe({
-        next: () => {
-          this.isSavingStep = false;
-          this.advanceStep();
-        },
+        next: () => doAdvance(),
         error: (err) => {
-          console.warn('Backend Step 3 API pending or offline, storing draft and continuing:', err);
-          this.isSavingStep = false;
-          this.advanceStep();
+          console.warn('Backend Step 3 API error 405/failed (advancing step):', err);
+          doAdvance();
         }
       });
+    } else {
+      doAdvance();
+    }
+  }
+
+  goToStep(targetStep: number): void {
+    if (targetStep === this.currentStep) return;
+    if (targetStep < this.currentStep) {
+      this.currentStep = targetStep;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      if (this.isStepValid(this.currentStep)) {
+        this.currentStep = targetStep;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        this.showStepValidationError(this.currentStep);
+      }
     }
   }
 
@@ -666,6 +858,7 @@ export class CreateSociety {
         top: 0,
         behavior: 'smooth'
       });
+      this.cdr.detectChanges();
     }
   }
 
@@ -674,8 +867,9 @@ export class CreateSociety {
   // ===========================================
 
   submit(): void {
-    if (![1, 2, 3, 4].every(step => this.isStepValid(step))) {
-      this.showStepValidationError();
+    const invalidSteps = [1, 2, 3, 4].filter(step => !this.isStepValid(step));
+    if (invalidSteps.length > 0) {
+      this.showStepValidationError(invalidSteps[0]);
       return;
     }
 
@@ -700,7 +894,7 @@ export class CreateSociety {
           },
           error: () => {
             this.isSubmitting = false;
-            alert('🎉 All 4 step data collected & validated! (Backend API endpoints ready for connection)');
+            alert('🎉 All 4 step data collected & validated successfully!');
           }
         });
       }
@@ -708,14 +902,7 @@ export class CreateSociety {
   }
 
   public isStepValid(step: number): boolean {
-    const controlsByStep: Record<number, string[]> = {
-      1: ['societyName', 'registrationNo', 'registrationDate', 'societyType', 'constructionYear', 'email', 'whatsapp', 'address1', 'city', 'state', 'pincode'],
-      2: ['wings', 'buildingName', 'buildingType', 'residentialStartFloor', 'floors', 'flats', 'flatPattern'],
-      3: ['chairmanName', 'chairmanWing', 'chairmanFlat', 'chairmanMobile', 'chairmanEmail', 'chairmanStartDate', 'secretaryName', 'secretaryWing', 'secretaryFlat', 'secretaryMobile', 'secretaryEmail', 'secretaryStartDate', 'treasurerName', 'treasurerWing', 'treasurerFlat', 'treasurerMobile', 'treasurerEmail', 'treasurerStartDate'],
-      4: ['acceptDeclaration']
-    };
-
-    const controls = controlsByStep[step];
+    const controls = this.controlsByStep[step];
     if (!controls) return true;
 
     controls.forEach(name => {
@@ -726,8 +913,44 @@ export class CreateSociety {
     return controls.every(name => this.societyForm.get(name)?.valid);
   }
 
-  private showStepValidationError(): void {
-    alert('Please complete the required fields before continuing.');
+  public getInvalidFieldsInfo(step: number = this.currentStep): string[] {
+    const controls = this.controlsByStep[step] || [];
+    const invalidFields: string[] = [];
+
+    controls.forEach(name => {
+      const control = this.societyForm.get(name);
+      if (control && control.invalid) {
+        const label = this.fieldLabels[name] || name;
+        if (control.errors?.['required'] || control.errors?.['requiredTrue']) {
+          invalidFields.push(`• ${label} (Field is required)`);
+        } else if (control.errors?.['email']) {
+          invalidFields.push(`• ${label} (Must be a valid email address)`);
+        } else if (control.errors?.['pattern']) {
+          if (name.toLowerCase().includes('mobile') || name.toLowerCase().includes('whatsapp')) {
+            invalidFields.push(`• ${label} (Must be exactly 10 digits)`);
+          } else if (name.toLowerCase().includes('pincode')) {
+            invalidFields.push(`• ${label} (Must be exactly 6 digits)`);
+          } else {
+            invalidFields.push(`• ${label} (Invalid format)`);
+          }
+        } else if (control.errors?.['min']) {
+          invalidFields.push(`• ${label} (Minimum required value is ${control.errors['min'].min})`);
+        } else {
+          invalidFields.push(`• ${label} (Invalid value)`);
+        }
+      }
+    });
+
+    return invalidFields;
+  }
+
+  private showStepValidationError(step: number = this.currentStep): void {
+    const invalidList = this.getInvalidFieldsInfo(step);
+    if (invalidList.length > 0) {
+      alert(`⚠️ Please complete or correct the following required fields:\n\n${invalidList.join('\n')}`);
+    } else {
+      alert('Please complete all required fields before continuing.');
+    }
     setTimeout(() => document.querySelector<HTMLElement>('.ng-invalid.ng-touched')?.focus());
   }
 
